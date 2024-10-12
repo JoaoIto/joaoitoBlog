@@ -2,6 +2,7 @@
 
 import { IProjeto } from "@/app/interfaces/IProjeto";
 import { getMongoClient } from "../database/connection";
+import { ObjectId } from "mongodb";
 
 /* // Array base de projetos simulados
 const projects: IProjeto[] = [
@@ -93,6 +94,81 @@ export async function POST(request: Request) {
   } catch (error) {
     // Tratamento de erros
     return new Response(JSON.stringify({ error: 'Erro ao criar projeto', details: error }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+}
+
+export async function PUT(request: Request) {
+  try {
+    // Lê os dados do corpo da requisição
+    const { id, ...updateData }: Partial<IProjeto> = await request.json();
+
+    // Conectando ao MongoDB
+    const client = await getMongoClient();
+    const db = client.db('joaoitoBlog');
+
+    // Acessando a collection 'projects'
+    const collection = db.collection('projects');
+
+    // Atualizando o projeto pelo ID
+    const result = await collection.updateOne(
+      { _id: new ObjectId(id) }, // Utilizando ObjectId do MongoDB
+      { $set: updateData }
+    );
+
+    if (result.modifiedCount === 0) {
+      return new Response(JSON.stringify({ message: 'Projeto não encontrado ou nada foi alterado.' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    // Retornando a confirmação de atualização
+    return new Response(JSON.stringify({ message: 'Projeto atualizado com sucesso.' }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  } catch (error) {
+    // Tratamento de erros
+    return new Response(JSON.stringify({ error: 'Erro ao atualizar projeto', details: error }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    // Lê os dados do corpo da requisição
+    const { id }: { id: string } = await request.json();
+
+    // Conectando ao MongoDB
+    const client = await getMongoClient();
+    const db = client.db('joaoitoBlog');
+
+    // Acessando a collection 'projects'
+    const collection = db.collection('projects');
+
+    // Removendo o projeto pelo ID
+    const result = await collection.deleteOne({ _id: new ObjectId(id) });
+
+    if (result.deletedCount === 0) {
+      return new Response(JSON.stringify({ message: 'Projeto não encontrado.' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    // Retornando a confirmação de remoção
+    return new Response(JSON.stringify({ message: 'Projeto removido com sucesso.' }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  } catch (error) {
+    // Tratamento de erros
+    return new Response(JSON.stringify({ error: 'Erro ao remover projeto', details: error }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
