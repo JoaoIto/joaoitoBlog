@@ -70,9 +70,10 @@ export async function POST(request: Request) {
       nome: body.nome,
       descricao: body.descricao,
       tecnologias: body.tecnologias,
-      linkGit: body.linkGit,          // Opcional
-      linkAcesso: body.linkAcesso,    // Opcional
-      dataCriacao: new Date().toISOString()  // Formato ISO
+      linkGit: body.linkGit,      
+      linkAcesso: body.linkAcesso,    
+      dataPostagem: new Date().toISOString(),  
+      dataCriacao: body.dataCriacao
     };
 
     // Conectando ao MongoDB
