@@ -44,6 +44,8 @@ export default function AdminForms() {
   })
 
   const onArticleSubmit = async (data: ArticleFormData) => {
+    console.log("Artigo:", data);
+    
     try {
       const response = await fetch("http://localhost:3000/api/articles", {
         method: "POST",
@@ -74,6 +76,7 @@ export default function AdminForms() {
   }
 
   const onProjetoSubmit = async (data: ProjetoFormData) => {
+    console.log("Projeto:", data);
     try {
       const response = await fetch("http://localhost:3000/api/projects", {
         method: "POST",
