@@ -35,12 +35,13 @@ export async function POST(request: Request) {
     const body: IArticle = await request.json();
 
     // Criando manualmente um ID simples e definindo a data de criação
-    const novoProjeto: Partial<IArticle> = {
+    const novoArtigo: Partial<IArticle> = {
       nome: body.nome,
       descricao: body.descricao, 
       areaEstudo: body.areaEstudo,     // Opcional
       linkAcesso: body.linkAcesso,    // Opcional
-      dataPublicacao: new Date().toISOString()  // Formato ISO
+      dataPostagem: new Date().toISOString(),  // Formato ISO
+      dataPublicacao: body.dataPublicacao, 
     };
 
     // Conectando ao MongoDB
@@ -51,10 +52,10 @@ export async function POST(request: Request) {
     const collection = db.collection('articles');
 
     // Inserindo o novo projeto na collection
-    await collection.insertOne(novoProjeto);
+    await collection.insertOne(novoArtigo);
 
     // Retornando o novo projeto salvo como resposta
-    return new Response(JSON.stringify({ message: 'Artigo criado com sucesso', novoProjeto }), {
+    return new Response(JSON.stringify({ message: 'Artigo criado com sucesso', novoArtigo }), {
       status: 201,
       headers: { 'Content-Type': 'application/json' }
     });
