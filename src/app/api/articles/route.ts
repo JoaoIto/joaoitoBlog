@@ -10,14 +10,14 @@ export async function GET() {
     const client = await getMongoClient();
     const db = client.db('joaoitoBlog');
     
-    // Acessando a collection 'projects'
+    // Acessando a collection 'articles'
     const collection = db.collection('articles');
 
     // Buscando todos os projetos
-    const projects = await collection.find({}).toArray();
+    const articles = await collection.find({}).toArray();
 
     // Retornando os projetos encontrados
-    return new Response(JSON.stringify({ projects }), {
+    return new Response(JSON.stringify({ articles }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
     const client = await getMongoClient();
     const db = client.db('joaoitoBlog');
     
-    // Acessando a collection 'projects'
+    // Acessando a collection 'articles'
     const collection = db.collection('articles');
 
     // Inserindo o novo projeto na collection
