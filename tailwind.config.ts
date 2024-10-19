@@ -20,7 +20,7 @@ const config: Config = {
           foreground: "#FFFFFF",
         },
         accent: {
-          DEFAULT: "#10B981", // Emerald
+          DEFAULT: "#ff3e3f", // Cool red
           foreground: "#FFFFFF",
         },
         muted: {
