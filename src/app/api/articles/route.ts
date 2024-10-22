@@ -13,11 +13,11 @@ export async function GET() {
     // Acessando a collection 'articles'
     const collection = db.collection('articles');
 
-    // Buscando todos os projetos
+    // Buscando todos os artigos
     const articles = await collection.find({}).toArray();
 
-    // Retornando os projetos encontrados
-    return new Response(JSON.stringify({ articles }), {
+    // Retornando apenas o array de artigos
+    return new Response(JSON.stringify(articles), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
@@ -29,19 +29,21 @@ export async function GET() {
     });
   }
 }
+
 export async function POST(request: Request) {
   try {
     // Lê os dados do corpo da requisição
-    const body: IArticle = await request.json();
+    const body: Omit<IArticle, "_id" | "createdAt" | "updatedAt"> = await request.json();
 
-    // Criando manualmente um ID simples e definindo a data de criação
-    const novoArtigo: Partial<IArticle> = {
+    // Criando um novo artigo com ID e definindo as datas
+    const novoArticle: Omit<IArticle, "_id"> & { _id: ObjectId } = {
+      _id: new ObjectId(), // Criando um novo ObjectId
       nome: body.nome,
-      descricao: body.descricao, 
-      areaEstudo: body.areaEstudo,     // Opcional
-      linkAcesso: body.linkAcesso,    // Opcional
-      dataPostagem: new Date().toISOString(),  // Formato ISO
-      dataPublicacao: body.dataPublicacao, 
+      descricao: body.descricao,
+      areaEstudo: body.areaEstudo,
+      dataPublicacao: body.dataPublicacao,
+      dataPostagem: new Date().toISOString(), // Data de postagem
+      linkAcesso: body.linkAcesso
     };
 
     // Conectando ao MongoDB
@@ -51,11 +53,11 @@ export async function POST(request: Request) {
     // Acessando a collection 'articles'
     const collection = db.collection('articles');
 
-    // Inserindo o novo projeto na collection
-    await collection.insertOne(novoArtigo);
+    // Inserindo o novo artigo na collection
+    await collection.insertOne(novoArticle);
 
-    // Retornando o novo projeto salvo como resposta
-    return new Response(JSON.stringify({ message: 'Artigo criado com sucesso', novoArtigo }), {
+    // Retornando o novo artigo salvo como resposta
+    return new Response(JSON.stringify({ message: 'Artigo criado com sucesso', novoArticle }), {
       status: 201,
       headers: { 'Content-Type': 'application/json' }
     });
@@ -72,7 +74,7 @@ export async function POST(request: Request) {
 export async function PUT(request: Request, { params }: { params: { id?: string } }) {
     try {
       // Lê os dados do corpo da requisição
-      const { id: bodyId, ...updateData }: Partial<IArticle> = await request.json();
+      const { _id: bodyId, ...updateData }: Partial<IArticle> = await request.json();
       
       // Prioriza o ID da rota, caso exista, senão usa o do corpo
       const id = params.id || bodyId;

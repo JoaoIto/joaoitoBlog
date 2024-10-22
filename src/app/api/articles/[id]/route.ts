@@ -41,7 +41,10 @@ export async function POST(request: Request) {
     const db = client.db('joaoitoBlog');
     const collection = db.collection('articles');
 
-    await collection.insertOne(novoArtigo);
+    await collection.insertOne({
+      ...novoArtigo,
+      _id: new ObjectId(novoArtigo._id) // Garante que _id seja ObjectId
+    });
 
     return new Response(JSON.stringify({ message: 'Artigo criado com sucesso', novoArtigo }), {
       status: 201,

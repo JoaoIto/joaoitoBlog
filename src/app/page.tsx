@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Github, Linkedin, Mail, ExternalLink, Briefcase, GraduationCap, ChevronDown, Code, Palette, Globe } from "lucide-react"
+import { Github, Linkedin, Mail, ExternalLink, Briefcase, GraduationCap, ChevronDown, Code, Globe } from "lucide-react"
 import { useArticles } from "./hooks/articles/useArticles"
 import { useProjects } from "./hooks/projects/useProjects"
 import { FaReact, FaJava } from "react-icons/fa"
@@ -18,6 +18,8 @@ import { SiTypescript, SiMongodb, SiQuarkus } from "react-icons/si"
 import { IoLogoJavascript } from "react-icons/io5"
 import { DiNodejs } from "react-icons/di"
 import React from "react"
+import { useExperiencias } from "./hooks/experiences/useExperiences"
+import { useEducacao } from "./hooks/education/useEducation"
 
 const contactFormSchema = z.object({
   nome: z.string().min(1, "Nome é obrigatório"),
@@ -40,6 +42,8 @@ export default function Portfolio() {
   const [searchTerm, setSearchTerm] = useState("")
   const { articles, loading: articlesLoading } = useArticles(searchTerm)
   const { projects, loading: projectsLoading } = useProjects()
+  const { experiencias, loading: experienciasLoading } = useExperiencias()
+  const { educacao, loading: educacaoLoading } = useEducacao()
   const { scrollY } = useScroll()
   const y = useTransform(scrollY, [0, 500], [0, 250])
   const controls = useAnimation()
@@ -157,38 +161,59 @@ export default function Portfolio() {
             Experiência & Educação
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Card className="bg-[#112240] border-[#233554] hover:shadow-lg hover:shadow-[#64ffda]/20 transition-all duration-300">
-                <CardHeader>
-                  <CardTitle className="text-[#ccd6f6] flex items-center">
-                    <Briefcase className="mr-2 text-[#64ffda]" />
-                    Pesquisador Científico
-                  </CardTitle>
-                  <CardDescription className="text-[#8892b0]">Universidade do Tocantins</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p>
-                    Conduzindo pesquisas de ponta em IA e aprendizado de máquina, contribuindo para projetos inovadores em processamento de linguagem natural e visão computacional.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Card className="bg-[#112240] border-[#233554] hover:shadow-lg hover:shadow-[#64ffda]/20 transition-all duration-300">
-                <CardHeader>
-                  <CardTitle className="text-[#ccd6f6] flex items-center">
-                    <GraduationCap className="mr-2 text-[#64ffda]" />
-                    Professor de Fundamentos Web
-                  </CardTitle>
-                  <CardDescription className="text-[#8892b0]">Academia de Código</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p>
-                    Capacitando a próxima geração de desenvolvedores com conhecimento abrangente em HTML, CSS, JavaScript e práticas modernas de desenvolvimento web.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
+            {experienciasLoading ? (
+              <div className="col-span-2 flex justify-center items-center">
+                <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#64ffda]"></div>
+              </div>
+            ) : (
+              experiencias.map((exp) => (
+                <motion.div key={exp._id.toString()} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Card className="bg-[#112240] border-[#233554] hover:shadow-lg hover:shadow-[#64ffda]/20 transition-all duration-300">
+                    <CardHeader>
+                      <CardTitle className="text-[#ccd6f6] flex items-center">
+                        <Briefcase className="mr-2 text-[#64ffda]" />
+                        {exp.cargo}
+                      </CardTitle>
+                      <CardDescription className="text-[#8892b0]">{exp.empresa}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-[#8892b0] mb-2">{exp.periodo}</p>
+                      <p>{exp.descricao}</p>
+                      <div className="mt-4">
+                        <p className="text-sm font-semibold text-[#64ffda]">Tecnologias:</p>
+                        <p>{exp.tecnologias.join(", ")}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))
+            )}
+          </div>
+          <div className="mt-8">
+            <h3 className="text-2xl font-semibold mb-4 text-[#ccd6f6]">Educação</h3>
+            {educacaoLoading ? (
+              <div className="flex justify-center items-center">
+                <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#64ffda]"></div>
+              </div>
+            ) : (
+              educacao.map((edu) => (
+                <motion.div key={edu._id.toString()} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Card className="bg-[#112240] border-[#233554] hover:shadow-lg hover:shadow-[#64ffda]/20 transition-all duration-300 mt-4">
+                    <CardHeader>
+                      <CardTitle className="text-[#ccd6f6] flex items-center">
+                        <GraduationCap className="mr-2 text-[#64ffda]" />
+                        {edu.curso}
+                      </CardTitle>
+                      <CardDescription className="text-[#8892b0]">{edu.instituicao}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-[#8892b0] mb-2">{edu.periodo}</p>
+                      <p>{edu.descricao}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))
+            )}
           </div>
         </motion.section>
 
@@ -280,7 +305,7 @@ export default function Portfolio() {
               placeholder="Pesquisar artigos..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-[#112240] border-[#233554] text-[#ccd6f6] focus:ring-[#64ffda] focus:border-[#64ffda]"
+              className="bg-[#112240] border-[#233554] text-[#ccd6f6] focus:ring-[#64ffda]   focus:border-[#64ffda]"
             />
           </div>
           {articlesLoading ? (
@@ -298,7 +323,7 @@ export default function Portfolio() {
                     transition={{ duration: 0.3, delay: index * 0.1 }}
                     whileHover={{ scale: 1.02 }}
                   >
-                    <Card className="bg-[#112240] border-[#233554] hover:shadow-lg  hover:shadow-[#64ffda]/20 transition-all duration-300">
+                    <Card className="bg-[#112240] border-[#233554] hover:shadow-lg hover:shadow-[#64ffda]/20 transition-all duration-300">
                       <CardHeader>
                         <CardTitle className="text-[#ccd6f6]">
                           {article.nome}
@@ -351,22 +376,6 @@ export default function Portfolio() {
                   <li>Next.js</li>
                   <li>TypeScript</li>
                   <li>Tailwind CSS</li>
-                </ul>
-              </CardContent>
-            </Card>
-            <Card className="bg-[#112240] border-[#233554] hover:shadow-lg hover:shadow-[#64ffda]/20 transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="text-[#ccd6f6] flex items-center">
-                  <Palette className="mr-2 text-[#64ffda]" />
-                  Design UI/UX
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="list-disc list-inside">
-                  <li>Figma</li>
-                  <li>Adobe XD</li>
-                  <li>Responsive Design</li>
-                  <li>Prototyping</li>
                 </ul>
               </CardContent>
             </Card>
