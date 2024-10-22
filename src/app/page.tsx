@@ -20,6 +20,7 @@ import { DiNodejs } from "react-icons/di"
 import React from "react"
 import { useExperiencias } from "./hooks/experiences/useExperiences"
 import { useEducacao } from "./hooks/education/useEducation"
+import { ReactTyped } from "react-typed"
 
 const contactFormSchema = z.object({
   nome: z.string().min(1, "Nome é obrigatório"),
@@ -92,22 +93,32 @@ export default function Portfolio() {
           }}
         />
         <div className="relative z-10 text-center px-4">
-          <motion.h1
+        <motion.div
             className="text-4xl md:text-6xl font-bold mb-4 text-[#64ffda]"
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            João Ito
-          </motion.h1>
-          <motion.p
+            <ReactTyped 
+              strings={['João Ito', 'João Victor', 'João Victor Póvoa França']}
+              typeSpeed={100}
+              backSpeed={50}
+              loop
+            />
+          </motion.div>
+          <motion.div
             className="text-xl md:text-2xl mb-6 text-[#ccd6f6]"
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Desenvolvedor Full Stack
-          </motion.p>
+            <ReactTyped 
+              strings={['Desenvolvedor Full Stack', 'Desenvolvedor Web', 'Software Enginner']}
+              typeSpeed={50}
+              backSpeed={30}
+              loop
+            />
+          </motion.div>
           <motion.p
             className="text-lg md:text-xl max-w-2xl mx-auto mb-8"
             initial={{ opacity: 0, y: -20 }}
