@@ -47,8 +47,8 @@ export async function GET() {
     // Buscando todos os projetos
     const projects = await collection.find({}).toArray();
 
-    // Retornando os projetos encontrados
-    return new Response(JSON.stringify({ projects }), {
+    // Retornando apenas o array de projetos
+    return new Response(JSON.stringify(projects), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
@@ -65,8 +65,9 @@ export async function POST(request: Request) {
     // Lê os dados do corpo da requisição
     const body: IProjeto = await request.json();
 
-    // Criando manualmente um ID simples e definindo a data de criação
-    const novoProjeto: Partial<IProjeto> = {
+    // Criando um novo projeto com ID e definindo a data de criação
+    const novoProjeto: Omit<IProjeto, "_id"> & { _id: ObjectId } = {
+      _id: new ObjectId(), // Criando um novo ObjectId
       nome: body.nome,
       descricao: body.descricao,
       tecnologias: body.tecnologias,
@@ -104,7 +105,7 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   try {
     // Lê os dados do corpo da requisição
-    const { id, ...updateData }: Partial<IProjeto> = await request.json();
+    const { _id, ...updateData }: Partial<IProjeto> = await request.json();
 
     // Conectando ao MongoDB
     const client = await getMongoClient();
@@ -115,7 +116,7 @@ export async function PUT(request: Request) {
 
     // Atualizando o projeto pelo ID
     const result = await collection.updateOne(
-      { _id: new ObjectId(id) }, // Utilizando ObjectId do MongoDB
+      { _id: new ObjectId(_id) }, // Utilizando ObjectId do MongoDB
       { $set: updateData }
     );
 

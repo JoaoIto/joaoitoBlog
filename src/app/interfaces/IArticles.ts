@@ -1,5 +1,7 @@
+import { ObjectId } from "mongodb";
+
 export interface IArticle {
-    id: string;
+    _id: string | ObjectId;
     nome: string;
     descricao: string;
     areaEstudo: string;

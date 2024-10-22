@@ -1,5 +1,7 @@
+import { ObjectId } from "mongodb";
+
 export interface IProjeto {
-    id: string;                // ID do projeto (gerado automaticamente)
+    _id: string | ObjectId;                // ID do projeto (gerado automaticamente)
     nome: string;              // Nome do projeto
     descricao: string;         // Descrição do projeto
     tecnologias: string[];     // Lista de tecnologias usadas no projeto
