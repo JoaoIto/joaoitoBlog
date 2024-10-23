@@ -39,7 +39,7 @@ export async function GET() {
   try {
     // Conectando ao MongoDB
     const client = await getMongoClient();
-    const db = client.db('novoBanco');
+    const db = client.db('joaoitoBlog');
     
     // Acessando a collection 'projects'
     const collection = db.collection('projects');
@@ -79,7 +79,7 @@ export async function POST(request: Request) {
 
     // Conectando ao MongoDB
     const client = await getMongoClient();
-    const db = client.db('novoBanco');
+    const db = client.db('joaoitoBlog');
     
     // Acessando a collection 'projects'
     const collection = db.collection('projects');
@@ -109,7 +109,7 @@ export async function PUT(request: Request) {
 
     // Conectando ao MongoDB
     const client = await getMongoClient();
-    const db = client.db('novoBanco');
+    const db = client.db('joaoitoBlog');
 
     // Acessando a collection 'projects'
     const collection = db.collection('projects');
@@ -148,7 +148,7 @@ export async function DELETE(request: Request) {
 
     // Conectando ao MongoDB
     const client = await getMongoClient();
-    const db = client.db('novoBanco');
+    const db = client.db('joaoitoBlog');
 
     // Acessando a collection 'projects'
     const collection = db.collection('projects');

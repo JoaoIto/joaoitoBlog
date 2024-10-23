@@ -6,7 +6,7 @@ import { getMongoClient } from "../../database/connection";
 export async function GET() {
   try {
     const client = await getMongoClient();
-    const db = client.db('novoBanco');
+    const db = client.db('joaoitoBlog');
     const collection = db.collection('articles');
 
     // Buscando todos os artigos
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     };
 
     const client = await getMongoClient();
-    const db = client.db('novoBanco');
+    const db = client.db('joaoitoBlog');
     const collection = db.collection('articles');
 
     await collection.insertOne({
@@ -64,7 +64,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     const updateData: Partial<IArticle> = await request.json();
 
     const client = await getMongoClient();
-    const db = client.db('novoBanco');
+    const db = client.db('joaoitoBlog');
     const collection = db.collection('articles');
 
     const result = await collection.updateOne(
@@ -95,7 +95,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   try {
     const client = await getMongoClient();
-    const db = client.db('novoBanco');
+    const db = client.db('joaoitoBlog');
     const collection = db.collection('articles');
 
     const result = await collection.deleteOne({ _id: new ObjectId(params.id) });

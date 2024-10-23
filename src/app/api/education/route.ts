@@ -7,7 +7,7 @@ import { ObjectId } from "mongodb";
 export async function GET() {
   try {
     const client = await getMongoClient();
-    const db = client.db('novoBanco');
+    const db = client.db('joaoitoBlog');
     const collection = db.collection('educations');
 
     const educacao = await collection.find({}).toArray();
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
     };
 
     const client = await getMongoClient();
-    const db = client.db('novoBanco');
+    const db = client.db('joaoitoBlog');
     const collection = db.collection('educations');
 
     await collection.insertOne({
