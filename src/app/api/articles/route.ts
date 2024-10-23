@@ -8,7 +8,7 @@ export async function GET() {
   try {
     // Conectando ao MongoDB
     const client = await getMongoClient();
-    const db = client.db('joaoitoBlog');
+    const db = client.db('novoBanco');
     
     // Acessando a collection 'articles'
     const collection = db.collection('articles');
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
 
     // Conectando ao MongoDB
     const client = await getMongoClient();
-    const db = client.db('joaoitoBlog');
+    const db = client.db('novoBanco');
     
     // Acessando a collection 'articles'
     const collection = db.collection('articles');
@@ -88,7 +88,7 @@ export async function PUT(request: Request, { params }: { params: { id?: string 
   
       // Conectando ao MongoDB
       const client = await getMongoClient();
-      const db = client.db('joaoitoBlog');
+      const db = client.db('novoBanco');
       const collection = db.collection('articles');
   
       // Atualizando o artigo pelo ID
@@ -135,7 +135,7 @@ export async function DELETE(request: Request, { params }: { params: { id?: stri
   
       // Conectando ao MongoDB
       const client = await getMongoClient();
-      const db = client.db('joaoitoBlog');
+      const db = client.db('novoBanco');
       const collection = db.collection('articles');
   
       // Removendo o artigo pelo ID
