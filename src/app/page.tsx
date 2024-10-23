@@ -289,9 +289,9 @@ export default function Portfolio() {
                           <CardHeader>
                             <CardTitle className="text-gray-900 dark:text-[#ccd6f6] flex items-center justify-between">
                               {project.nome}
-                              {project.tecnologias && (
+                              {project.titulos && (
                                 <Badge className="bg-yellow-400 text-gray-900">
-                                  {project.tecnologias}
+                                  {project.titulos}
                                 </Badge>
                               )}
                             </CardTitle>
