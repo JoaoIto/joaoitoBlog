@@ -70,6 +70,7 @@ export async function POST(request: Request) {
       _id: new ObjectId(), // Criando um novo ObjectId
       nome: body.nome,
       descricao: body.descricao,
+      titulos: body.titulos,
       tecnologias: body.tecnologias,
       linkGit: body.linkGit,      
       linkAcesso: body.linkAcesso,    
