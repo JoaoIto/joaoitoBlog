@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Github, Linkedin, Mail, ExternalLink, Briefcase, GraduationCap, ChevronDown, Code, Globe, Sun, Moon } from "lucide-react"
+import { Github, Linkedin, Mail, ExternalLink, Briefcase, GraduationCap, ChevronDown, Code, Globe, Sun, Moon, ChevronLeft, ChevronRight, Badge } from "lucide-react"
 import { useArticles } from "./hooks/articles/useArticles"
 import { useProjects } from "./hooks/projects/useProjects"
 import { FaReact, FaJava } from "react-icons/fa"
@@ -50,7 +50,9 @@ export default function Portfolio() {
   const y = useTransform(scrollY, [0, 500], [0, 250])
   const controls = useAnimation()
   const { theme, setTheme } = useTheme()
-  
+  const [currentProjectIndex, setCurrentProjectIndex] = useState(0)
+  const [currentArticleIndex, setCurrentArticleIndex] = useState(0)
+
   const { handleSubmit, register, formState: { errors } } = useForm<z.infer<typeof contactFormSchema>>({
     resolver: zodResolver(contactFormSchema)
   })
@@ -81,6 +83,30 @@ export default function Portfolio() {
       transition: { delay: i * 0.1 },
     }))
   }, [controls])
+
+  const nextProject = () => {
+    setCurrentProjectIndex((prevIndex) => 
+      prevIndex === projects.length - 1 ? 0 : prevIndex + 1
+    )
+  }
+
+  const prevProject = () => {
+    setCurrentProjectIndex((prevIndex) => 
+      prevIndex === 0 ? projects.length - 1 : prevIndex - 1
+    )
+  }
+
+  const nextArticle = () => {
+    setCurrentArticleIndex((prevIndex) => 
+      prevIndex === articles.length - 1 ? 0 : prevIndex + 1
+    )
+  }
+
+  const prevArticle = () => {
+    setCurrentArticleIndex((prevIndex) => 
+      prevIndex === 0 ? articles.length - 1 : prevIndex - 1
+    )
+  }
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0a192f] text-gray-900 dark:text-[#8892b0] transition-colors duration-300">
@@ -250,61 +276,82 @@ export default function Portfolio() {
               <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900 dark:border-[#64ffda]"></div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects && projects.length > 0 ? (
-                projects.map((project, index) => (
-                  <motion.div
-                    key={project._id.toString()}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Card className="bg-white dark:bg-[#112240] border-gray-200 dark:border-[#233554] h-full flex flex-col hover:shadow-lg hover:shadow-gray-300 dark:hover:shadow-[#64ffda]/20 transition-all duration-300">
-                      <CardHeader>
-                        <CardTitle className="text-gray-900 dark:text-[#ccd6f6]">
-                          {project.nome}
-                        </CardTitle>
-                        <CardDescription className="text-gray-600 dark:text-[#8892b0]">
-                          {project.tecnologias.join(", ")}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent className="flex-grow">
-                        <p className="mb-4 text-gray-700 dark:text-[#a8b2d1]">{project.descricao}</p>
-                        <div className="flex space-x-4 mt-auto">
-                          {project.linkGit && (
-                            <Button variant="outline" size="sm" asChild className="text-gray-700 dark:text-[#64ffda] hover:bg-gray-100 dark:hover:bg-[#233554]">
-                              <a
-                                href={project.linkGit}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <Github className="mr-2 h-4 w-4" />
-                                GitHub
-                              </a>
-                            </Button>
-                          )}
-                          {project.linkAcesso && (
-                            <Button variant="outline" size="sm" asChild className="text-gray-700 dark:text-[#64ffda] hover:bg-gray-100 dark:hover:bg-[#233554]">
-                              <a
-                                href={project.linkAcesso}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <ExternalLink className="mr-2 h-4 w-4" />
-                                Demo
-                              </a>
-                            </Button>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))
-              ) : (
-                <p className="text-gray-700 dark:text-[#a8b2d1]">Nenhum projeto encontrado.</p>
-              )}
+            <div className="relative">
+              <div className="overflow-hidden">
+                <motion.div
+                  className="flex transition-transform duration-300 ease-in-out"
+                  style={{ transform: `translateX(-${currentProjectIndex * 100}%)` }}
+                >
+                  {projects && projects.length > 0 ? (
+                    projects.map((project) => (
+                      <div key={project._id.toString()} className="w-full flex-shrink-0 px-4">
+                        <Card className="bg-white dark:bg-[#112240] border-gray-200 dark:border-[#233554] h-full flex flex-col hover:shadow-lg hover:shadow-gray-300 dark:hover:shadow-[#64ffda]/20 transition-all duration-300">
+                          <CardHeader>
+                            <CardTitle className="text-gray-900 dark:text-[#ccd6f6] flex items-center justify-between">
+                              {project.nome}
+                              {project.tecnologias && (
+                                <Badge className="bg-yellow-400 text-gray-900">
+                                  {project.tecnologias}
+                                </Badge>
+                              )}
+                            </CardTitle>
+                            <CardDescription className="text-gray-600 dark:text-[#8892b0]">
+                              {project.tecnologias.join(", ")}
+                            </CardDescription>
+                          </CardHeader>
+                          <CardContent className="flex-grow">
+                            <p className="mb-4 text-gray-700 dark:text-[#a8b2d1]">{project.descricao}</p>
+                            <div className="flex space-x-4 mt-auto">
+                              {project.linkGit && (
+                                <Button variant="outline" size="sm" asChild className="text-gray-700 dark:text-[#64ffda] hover:bg-gray-100 dark:hover:bg-[#233554]">
+                                  <a
+                                    href={project.linkGit}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <Github className="mr-2 h-4 w-4" />
+                                    GitHub
+                                  </a>
+                                </Button>
+                              )}
+                              {project.linkAcesso && (
+                                <Button variant="outline" size="sm" asChild className="text-gray-700 dark:text-[#64ffda] hover:bg-gray-100 dark:hover:bg-[#233554]">
+                                  <a
+                                    href={project.linkAcesso}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <ExternalLink className="mr-2 h-4 w-4" />
+                                    Demo
+                                  </a>
+                                </Button>
+                              )}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-700 dark:text-[#a8b2d1]">Nenhum projeto encontrado.</p>
+                  )}
+                </motion.div>
+              </div>
+              <Button
+                onClick={prevProject}
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-[#112240] text-gray-700 dark:text-[#64ffda]"
+                variant="ghost"
+                size="icon"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </Button>
+              <Button
+                onClick={nextProject}
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-[#112240] text-gray-700 dark:text-[#64ffda]"
+                variant="ghost"
+                size="icon"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </Button>
             </div>
           )}
         </motion.section>
@@ -332,43 +379,59 @@ export default function Portfolio() {
               <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900 dark:border-[#64ffda]"></div>
             </div>
           ) : (
-            <div className="space-y-6">
-              {articles && articles.length > 0 ? (
-                articles.map((article, index) => (
-                  <motion.div
-                    key={article._id.toString()}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <Card className="bg-white dark:bg-[#112240] border-gray-200 dark:border-[#233554] hover:shadow-lg hover:shadow-gray-300 dark:hover:shadow-[#64ffda]/20 transition-all duration-300">
-                      
-                      <CardHeader>
-                        <CardTitle className="text-gray-900 dark:text-[#ccd6f6]">
-                          {article.nome}
-                        </CardTitle>
-                        <CardDescription className="text-gray-600 dark:text-[#8892b0]">{article.areaEstudo}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="mb-4 text-gray-700 dark:text-[#a8b2d1]">{article.descricao}</p>
-                        <Button variant="outline" size="sm" asChild className="text-gray-700 dark:text-[#64ffda] hover:bg-gray-100 dark:hover:bg-[#233554]">
-                          <a
-                            href={article.linkAcesso}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <ExternalLink className="mr-2 h-4 w-4" />
-                            Ler Artigo
-                          </a>
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))
-              ) : (
-                <p className="text-gray-700 dark:text-[#a8b2d1]">Nenhum artigo encontrado.</p>
-              )}
+            <div className="relative">
+              <div className="overflow-hidden">
+                <motion.div
+                  className="flex transition-transform duration-300 ease-in-out"
+                  style={{ transform: `translateX(-${currentArticleIndex * 100}%)` }}
+                >
+                  {articles && articles.length > 0 ? (
+                    articles.map((article) => (
+                      <div key={article._id.toString()} className="w-full flex-shrink-0 px-4">
+                        <Card className="bg-white dark:bg-[#112240] border-gray-200 dark:border-[#233554] hover:shadow-lg hover:shadow-gray-300 dark:hover:shadow-[#64ffda]/20 transition-all duration-300">
+                          <CardHeader>
+                            <CardTitle className="text-gray-900 dark:text-[#ccd6f6]">
+                              {article.nome}
+                            </CardTitle>
+                            <CardDescription className="text-gray-600 dark:text-[#8892b0]">{article.areaEstudo}</CardDescription>
+                          </CardHeader>
+                          <CardContent>
+                            <p className="mb-4 text-gray-700 dark:text-[#a8b2d1]">{article.descricao}</p>
+                            <Button variant="outline" size="sm" asChild className="text-gray-700 dark:text-[#64ffda] hover:bg-gray-100 dark:hover:bg-[#233554]">
+                              <a
+                                href={article.linkAcesso}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <ExternalLink className="mr-2 h-4 w-4" />
+                                Ler Artigo
+                              </a>
+                            </Button>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-700 dark:text-[#a8b2d1]">Nenhum artigo encontrado.</p>
+                  )}
+                </motion.div>
+              </div>
+              <Button
+                onClick={prevArticle}
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-[#112240] text-gray-700 dark:text-[#64ffda]"
+                variant="ghost"
+                size="icon"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </Button>
+              <Button
+                onClick={nextArticle}
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white dark:bg-[#112240] text-gray-700  dark:text-[#64ffda]"
+                variant="ghost"
+                size="icon"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </Button>
             </div>
           )}
         </motion.section>
