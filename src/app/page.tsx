@@ -289,10 +289,14 @@ export default function Portfolio() {
                           <CardHeader>
                             <CardTitle className="text-gray-900 dark:text-[#ccd6f6] flex items-center justify-between">
                               {project.nome}
-                              {project.titulos && (
-                                <Badge className="bg-yellow-400 text-gray-900">
-                                  {project.titulos}
-                                </Badge>
+                              {project.titulos && project.titulos.length > 0 && (
+                                <div className="flex flex-wrap gap-2">
+                                  {project.titulos.map((titulo, index) => (
+                                    <Badge key={index} className="bg-yellow-400 text-gray-900">
+                                      {titulo}
+                                    </Badge>
+                                  ))}
+                                </div>
                               )}
                             </CardTitle>
                             <CardDescription className="text-gray-600 dark:text-[#8892b0]">
