@@ -2,6 +2,11 @@
 
 **joaoitoBlog** é um projeto fullstack desenvolvido com **Next.js**, projetado para ser um portfólio pessoal com uma página de administração para publicação de projetos. O sistema utiliza uma **API integrada** para a gestão dos projetos, com conexão ao banco de dados **MongoDB** para bando de dados.
 
+<p align="center">
+  <video src="./.github/videos/joaoitoBlogPrint.mp4" autoplay muted loop>
+  </video>
+</p>
+
 ## Funcionalidades
 
 - **Portfólio pessoal**: Exibe projetos desenvolvidos, com descrições, tecnologias utilizadas e links para repositórios e deploys.
