@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -20,6 +20,7 @@ import { IArticle } from "@/app/interfaces/IArticles"
 import { IProjeto } from "@/app/interfaces/IProjeto"
 import { IEducation } from "@/app/interfaces/IEducation"
 import { IExperience } from "@/app/interfaces/IExperiences"
+import { useRouter } from "next/navigation"
 
 const educationSchema = z.object({
   instituicao: z.string().min(1, "Instituição é obrigatória"),
@@ -60,6 +61,26 @@ type ProjetoFormData = z.infer<typeof projetoSchema>
 type ArticleFormData = z.infer<typeof articleSchema>
 
 export default function AdminForms() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const router = useRouter();
+  
+  useEffect(() => {
+    // Verifica se o usuário está autenticado ao carregar a página
+    const checkAuth = async () => {
+      const response = await fetch("/api/admin/check-auth");
+      if (response.status === 401 || authenticated === false) {
+        // Se não estiver autenticado, redireciona para a página de login
+        router.push("/admin/login");
+      } else {
+        const data = await response.json();
+        if (data.authenticated) {
+          setAuthenticated(true); // Define que o usuário está autenticado
+        }
+      }
+    };
+
+    checkAuth();
+  }, [authenticated, router]);
   const [activeTab, setActiveTab] = useState("education")
 
   const educationForm = useForm<EducationFormData>({
