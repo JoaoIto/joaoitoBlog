@@ -103,9 +103,14 @@ export default function AdminForms() {
     resolver: zodResolver(articleSchema),
   })
 
-  const onSubmit = async (data: Partial<IArticle> | Partial<IProjeto> | Partial<IEducation> | Partial<IExperience>, endpoint: string) => {
+  const onSubmit = async (
+    data: Partial<IArticle> | Partial<IProjeto> | Partial<IEducation> | Partial<IExperience>, 
+    endpoint: string
+  ) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL; // Substitua pela URL padrão ou faça o fallback adequado
+  
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/${endpoint}`, {
+      const response = await fetch(`${apiUrl}/api/${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -114,30 +119,32 @@ export default function AdminForms() {
           ...data,
           dataPostagem: new Date().toISOString(),
         }),
-      })
-
+      });
+  
       if (!response.ok) {
-        throw new Error(`Falha ao enviar ${endpoint}`)
+        throw new Error(`Falha ao enviar ${endpoint}`);
       }
-      
-      switch(endpoint) {
-        case 'education':
-          educationForm.reset()
-          break
-        case 'experiences':
-          experienceForm.reset()
-          break
-        case 'projects':
-          projetoForm.reset()
-          break
-        case 'articles':
-          articleForm.reset()
-          break
+  
+      // Reset o formulário correspondente ao endpoint enviado
+      switch (endpoint) {
+        case "education":
+          educationForm.reset();
+          break;
+        case "experiences":
+          experienceForm.reset();
+          break;
+        case "projects":
+          projetoForm.reset();
+          break;
+        case "articles":
+          articleForm.reset();
+          break;
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
+  
 
   return (
     <div className="w-full h-full flex justify-center items-center p-4">
