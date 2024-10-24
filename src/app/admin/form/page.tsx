@@ -105,7 +105,7 @@ export default function AdminForms() {
 
   const onSubmit = async (data: Partial<IArticle> | Partial<IProjeto> | Partial<IEducation> | Partial<IExperience>, endpoint: string) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${endpoint}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
