@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+"use client"
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider"
@@ -14,16 +14,12 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata: Metadata = {
-  title: "JoaoItoBlog",
-  description: "Um portfolio do João, the dev",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html className={`${geistSans.variable} ${geistMono.variable} antialiased`} lang="en">
       <body className="w-full h-full">
@@ -33,7 +29,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+                {children}
         </ThemeProvider>
       </body>
     </html>

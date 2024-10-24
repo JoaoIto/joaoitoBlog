@@ -61,26 +61,30 @@ type ProjetoFormData = z.infer<typeof projetoSchema>
 type ArticleFormData = z.infer<typeof articleSchema>
 
 export default function AdminForms() {
-  const [authenticated, setAuthenticated] = useState(false);
   const router = useRouter();
   
   useEffect(() => {
     // Verifica se o usuário está autenticado ao carregar a página
     const checkAuth = async () => {
-      const response = await fetch("/api/admin/check-auth");
-      if (response.status === 401 || authenticated === false) {
-        // Se não estiver autenticado, redireciona para a página de login
-        router.push("/admin/login");
-      } else {
+      try {
+        const response = await fetch("/api/admin/check-auth");
         const data = await response.json();
+        
+        // Verifica se o usuário está autenticado
         if (data.authenticated) {
-          setAuthenticated(true); // Define que o usuário está autenticado
+          router.push("/admin/form"); // Usuário autenticado, direciona para o formulário
+        } else {
+          router.push("/admin/login"); // Não autenticado, direciona para a página de login
         }
+      } catch (error) {
+        console.error("Erro ao verificar autenticação:", error);
+        router.push("/admin/login"); // Em caso de erro, redireciona para login
       }
     };
 
     checkAuth();
-  }, [authenticated, router]);
+  }, [router]);
+
   const [activeTab, setActiveTab] = useState("education")
 
   const educationForm = useForm<EducationFormData>({
