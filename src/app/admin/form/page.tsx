@@ -209,7 +209,7 @@ export default function AdminForms() {
             </TabsContent>
 
             <TabsContent value="experience">
-              <form onSubmit={experienceForm.handleSubmit((data) => onSubmit(data, 'experience'))} className="space-y-4">
+              <form onSubmit={experienceForm.handleSubmit((data) => onSubmit(data, 'experiences'))} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="experience-cargo">Cargo</Label>
