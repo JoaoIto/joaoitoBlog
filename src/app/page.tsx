@@ -114,7 +114,7 @@ export default function Portfolio() {
         <motion.div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: "url('/placeholder.svg?height=1080&width=1920')",
+            backgroundImage: "url('/imgs/background-sunshine-space.jpg')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             y,
@@ -148,7 +148,7 @@ export default function Portfolio() {
             />
           </motion.div>
           <motion.p
-            className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-gray-600 dark:text-[#8892b0]"
+            className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-gray-200"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
