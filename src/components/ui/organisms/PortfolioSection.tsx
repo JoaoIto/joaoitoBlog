@@ -34,7 +34,7 @@ export const PortfolioSection: React.FC<PortfolioProps> = ({
                     >
                         {projects.length > 0 ? (
                             projects.map((project) => (
-                                <div key={project._id} className="w-full flex-shrink-0 px-4">
+                                <div key={project._id.toString()} className="w-full flex-shrink-0 px-4">
                                     <Card className="backdrop-blur-lg bg-black bg-opacity-40 border-2 shadow-lg hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                                         <CardHeader>
                                             <CardTitle className="text-gray-900 dark:text-[#ccd6f6] flex items-center justify-between">

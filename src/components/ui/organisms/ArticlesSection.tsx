@@ -56,7 +56,7 @@ export const ArticlesSection: React.FC<ArticlesSectionProps> = ({
                         >
                             {filteredArticles.length > 0 ? (
                                 filteredArticles.map((article) => (
-                                    <div key={article._id} className="w-full flex-shrink-0 px-4">
+                                    <div key={article._id.toString()} className="w-full flex-shrink-0 px-4">
                                         <Card className="backdrop-blur-lg bg-black bg-opacity-40 border-2 shadow-lg hover:shadow-xl transition-all duration-300">
                                             <CardHeader>
                                                 <CardTitle className="text-gray-900 dark:text-[#ccd6f6]">

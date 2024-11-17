@@ -18,7 +18,7 @@ export const ExperienciaSection: React.FC<ExperienciaProps> = ({ experiencias, e
                 </div>
             ) : (
                 experiencias.map(exp => (
-                    <motion.div key={exp._id} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                    <motion.div key={exp._id.toString()} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                         <Card className="backdrop-blur-lg bg-black bg-opacity-40 border-2 shadow-lg hover:shadow-xl transition-all duration-300">
                             <CardHeader>
                                 <CardTitle className="text-gray-900 dark:text-[#ccd6f6] flex items-center">

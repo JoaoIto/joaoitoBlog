@@ -17,7 +17,7 @@ export const EducacaoSection: React.FC<EducacaoProps> = ({ educacao, educacaoLoa
             </div>
         ) : (
             educacao.map(edu => (
-                <motion.div key={edu._id} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                <motion.div key={edu._id.toString()} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                     <Card className="backdrop-blur-lg bg-black bg-opacity-40 border-2 shadow-lg hover:shadow-xl transition-all duration-300 mt-4">
                         <CardHeader>
                             <CardTitle className="text-gray-900 dark:text-[#ccd6f6] flex items-center">
