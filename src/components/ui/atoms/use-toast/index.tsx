@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+import { Button } from "../button"
+import { Input } from "../input"
+import { Label } from "../label"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/atoms"
 import { ToastAction } from "@radix-ui/react-toast"
 import { useToast } from "./toast-context" 
 export default function ToastDemo() {

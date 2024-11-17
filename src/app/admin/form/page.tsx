@@ -4,18 +4,18 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { Button } from "@/components/ui/button"
+import { Button } from "../../../components/ui/atoms/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+} from "@/components/ui/atoms"
+import { Input } from "../../../components/ui/atoms/input"
+import { Label } from "../../../components/ui/atoms/label"
+import { Textarea } from "../../../components/ui/atoms/textarea"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../components/ui/atoms/tabs"
 import { IArticle } from "@/app/interfaces/IArticles"
 import { IProjeto } from "@/app/interfaces/IProjeto"
 import { IEducation } from "@/app/interfaces/IEducation"
