@@ -9,21 +9,25 @@ import { DiNodejs } from 'react-icons/di'
 import { ChevronDown, Github, Linkedin, Mail, Moon, Sun } from 'lucide-react'
 import { Button } from '@/components/ui/atoms/button'
 
+type StackIcon = {
+    name: string;
+    icon: React.ComponentType<{ size: number; className: string }>;
+};
 export const Header: React.FC = () => {
     const [theme, setTheme] = useState('dark')
     const { scrollY } = useScroll()
     const y = useTransform(scrollY, [0, 500], [0, 250])
 
-    const stackIcons = [
-        { name: 'JavaScript', icon: <IoLogoJavascript /> },
-        { name: 'TypeScript', icon: <SiTypescript /> },
-        { name: 'Java', icon: <FaJava /> },
-        { name: 'Next.js', icon: <RiNextjsFill /> },
-        { name: 'React', icon: <FaReact /> },
-        { name: 'MongoDB', icon: <SiMongodb /> },
-        { name: 'Node.js', icon: <DiNodejs /> },
-        { name: 'Quarkus', icon: <SiQuarkus /> },
-    ]
+    const stackIcons: StackIcon[] = [
+        { name: 'JavaScript', icon: IoLogoJavascript },
+        { name: 'TypeScript', icon: SiTypescript },
+        { name: 'Java', icon: FaJava },
+        { name: 'Next.js', icon: RiNextjsFill },
+        { name: 'React', icon: FaReact },
+        { name: 'MongoDB', icon: SiMongodb },
+        { name: 'Node.js', icon: DiNodejs },
+        { name: 'Quarkus', icon: SiQuarkus },
+    ];
 
     return (
         <header className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -105,15 +109,13 @@ export const Header: React.FC = () => {
                         <motion.div
                             key={icon.name}
                             className="w-12 h-12 md:w-16 md:h-16 flex justify-center items-center border-2 rounded-full shadow-lg"
-                            initial={{opacity: 0, scale: 0.5}}
-                            animate={{opacity: 1, scale: 1}}
-                            transition={{
-                                duration: 0.5,
-                                delay: index * 0.1,
-                            }}
-                            whileHover={{scale: 1.1}}
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            whileHover={{ scale: 1.1 }}
                         >
-                            {React.cloneElement(icon.icon, {size: 32, className: "text-gray-700 dark:text-[#64ffda]"})}
+                            {/* Passando o ícone com as propriedades corretas */}
+                            <icon.icon size={32} className="text-gray-700 dark:text-[#64ffda]" />
                         </motion.div>
                     ))}
                 </motion.div>
