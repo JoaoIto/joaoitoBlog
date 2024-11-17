@@ -18,7 +18,7 @@ const contactFormSchema = z.object({
 type ContactFormInputs = z.infer<typeof contactFormSchema>;
 
 export const ContactSection: React.FC = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<ContactFormInputs>({
+    const { handleSubmit, formState: { errors } } = useForm<ContactFormInputs>({
         resolver: zodResolver(contactFormSchema)
     });
 
