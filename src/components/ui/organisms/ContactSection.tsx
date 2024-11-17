@@ -1,37 +1,45 @@
+'use client'
 
-import { useForm } from 'react-hook-form';
-import {Card, CardContent} from "@/components/ui/atoms";
-import {Input} from "@/components/ui/atoms/input";
-import {Textarea} from "@/components/ui/atoms/textarea";
-import {Button} from "@/components/ui/atoms/button";
+import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Card, CardContent } from "@/components/ui/atoms";
+import { Input } from "@/components/ui/atoms/input";
+import { Textarea } from "@/components/ui/atoms/textarea";
+import { Button } from "@/components/ui/atoms/button";
 import * as z from "zod";
 
 const contactFormSchema = z.object({
     nome: z.string().min(1, "Nome é obrigatório"),
     email: z.string().email("Endereço de email inválido"),
     mensagem: z.string().min(10, "A mensagem deve ter pelo menos 10 caracteres"),
-})
-export const ContactSection: React.FC = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+});
 
-    const onSubmit = async (data: z.infer<typeof contactFormSchema>) => {
+type ContactFormInputs = z.infer<typeof contactFormSchema>;
+
+export const ContactSection: React.FC = () => {
+    const { register, handleSubmit, formState: { errors } } = useForm<ContactFormInputs>({
+        resolver: zodResolver(contactFormSchema)
+    });
+
+    const onSubmit: SubmitHandler<ContactFormInputs> = async (data) => {
         try {
             const response = await fetch("/api/email", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
-            })
+            });
 
             if (response.ok) {
-                alert("Email enviado com sucesso!")
+                alert("Email enviado com sucesso!");
             } else {
-                alert("Erro ao enviar o email.")
+                alert("Erro ao enviar o email.");
             }
         } catch (error) {
-            console.error("Erro ao enviar email:", error)
-            alert("Erro ao enviar o email.")
+            console.error("Erro ao enviar email:", error);
+            alert("Erro ao enviar o email.");
         }
-    }
+    };
 
     return (
         <section className="mb-20">
@@ -48,7 +56,6 @@ export const ContactSection: React.FC = () => {
                         <div>
                             <Input
                                 placeholder="Nome"
-                                {...register("nome", { required: "O nome é obrigatório." })}
                                 className="bg-white/50 dark:bg-[#0a192f]/50 border-gray-300 dark:border-[#233554] text-gray-900 dark:text-[#ccd6f6] focus:ring-2 focus:ring-blue-500 dark:focus:ring-[#64ffda] focus:border-transparent"
                             />
                             {errors.nome && <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.nome.message}</p>}
@@ -57,7 +64,6 @@ export const ContactSection: React.FC = () => {
                             <Input
                                 type="email"
                                 placeholder="Email"
-                                {...register("email", { required: "O email é obrigatório." })}
                                 className="bg-white/50 dark:bg-[#0a192f]/50 border-gray-300 dark:border-[#233554] text-gray-900 dark:text-[#ccd6f6] focus:ring-2 focus:ring-blue-500 dark:focus:ring-[#64ffda] focus:border-transparent"
                             />
                             {errors.email && <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.email.message}</p>}
@@ -65,7 +71,6 @@ export const ContactSection: React.FC = () => {
                         <div>
                             <Textarea
                                 placeholder="Mensagem"
-                                {...register("mensagem", { required: "A mensagem é obrigatória." })}
                                 className="bg-white/50 dark:bg-[#0a192f]/50 border-gray-300 dark:border-[#233554] text-gray-900 dark:text-[#ccd6f6] focus:ring-2 focus:ring-blue-500 dark:focus:ring-[#64ffda] focus:border-transparent"
                             />
                             {errors.mensagem && <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.mensagem.message}</p>}
