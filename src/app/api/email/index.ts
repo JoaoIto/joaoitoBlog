@@ -4,22 +4,25 @@ import nodemailer from 'nodemailer';
 // Configuração do transporte de email
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail', // Pode usar outro serviço como SendGrid, etc.
+    service: 'gmail',
     auth: {
-      user: 'seuemail@gmail.com',
-      pass: 'suasenha',
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
   });
   
 export const sendEmail = async (data: IMessageEmail) => {
     const mailOptions = {
-      from: data.email, // De quem está enviando (o email do formulário)
-      to: 'joaovictorpfr@gmail.com', // Seu email para receber os dados do formulário
-      subject: 'Nova mensagem do formulário de contato',
+      from: process.env.EMAIL_USER, // O envio deve ser feito pelo usuário autenticado
+      to: 'joaovictorpfr@gmail.com',
+      replyTo: data.email, // Responder diretamente para quem enviou a mensagem
+      subject: `[Portfólio] Nova mensagem de ${data.nome}`,
       text: `
         Nome: ${data.nome}
         Email: ${data.email}
-        Mensagem: ${data.mensagem}
+        
+        Mensagem: 
+        ${data.mensagem}
       `,
     };
   
