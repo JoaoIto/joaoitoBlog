@@ -7,15 +7,21 @@ export async function GET() {
         pinnedItems(first: 6, types: REPOSITORY) {
           nodes {
             ... on Repository {
+              id
               name
               description
               url
               homepageUrl
               stargazerCount
-              languages(first: 3) {
+              forkCount
+              primaryLanguage {
+                name
+              }
+              repositoryTopics(first: 5) {
                 nodes {
-                  name
-                  color
+                  topic {
+                    name
+                  }
                 }
               }
             }
@@ -37,9 +43,28 @@ export async function GET() {
     });
 
     const data = await response.json();
-    const pinned = data.data?.user?.pinnedItems?.nodes || [];
-    return NextResponse.json(pinned);
+    const pinnedNodes = data.data?.user?.pinnedItems?.nodes || [];
+
+    const featuredNames = ['FinancePro', 'node-balancer', 'SoftwareHUB', 'CadastroProgramas-Unitins', 'Help-City', 'links-valid'];
+
+    const mappedRepos = pinnedNodes.map((repo: any) => ({
+      id: repo.id,
+      name: repo.name,
+      description: repo.description,
+      html_url: repo.url,
+      homepage: repo.homepageUrl,
+      stargazers_count: repo.stargazerCount,
+      forks_count: repo.forkCount,
+      language: repo.primaryLanguage?.name || null,
+      topics: repo.repositoryTopics?.nodes?.map((n: any) => n.topic.name) || [],
+      featured: featuredNames.includes(repo.name)
+    }));
+
+    // Sort to put featured first
+    mappedRepos.sort((a: any, b: any) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+
+    return NextResponse.json(mappedRepos);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch' }, { status: 500 });
   }
-}
+}

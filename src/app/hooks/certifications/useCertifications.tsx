@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ICertification } from "@/components/ui/organisms/CertificationsSection"
+import { Certification } from "@/components/ui/organisms/CertificationsSection"
 
 export const useCertifications = () => {
-  const [certifications, setCertifications] = useState<ICertification[]>([])
+  const [certifications, setCertifications] = useState<Certification[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

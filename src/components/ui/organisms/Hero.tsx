@@ -35,32 +35,43 @@ export const Hero: React.FC = () => {
   return (
     <section
       id="hero"
-      className="min-h-screen flex flex-col items-center justify-center px-4 pt-20 bg-[#020617]"
+      className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20 bg-[#020617] overflow-hidden"
     >
-      <div className="max-w-5xl mx-auto text-center">
+      {/* Animated Background Blobs */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob" style={{ animationDelay: '0ms' }} />
+      <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob" style={{ animationDelay: '2000ms' }} />
+      <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-blue-600/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob" style={{ animationDelay: '4000ms' }} />
+
+      <div className="relative z-10 max-w-5xl mx-auto text-center">
         {/* Status Badge */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-sm font-medium mb-8"
+          className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-indigo-300 text-sm font-medium mb-8 shadow-2xl"
         >
-          <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+          <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+          </span>
           Disponível para novos projetos
         </motion.div>
 
         {/* Name */}
         <motion.h1
-          className="text-6xl md:text-8xl font-black text-white mb-6 tracking-tighter"
+          className="text-6xl md:text-8xl font-black mb-6 tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-indigo-200 to-indigo-500"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
           João Ito
         </motion.h1>
 
         {/* Typed role */}
         <motion.div
-          className="text-2xl md:text-3xl text-indigo-400 font-bold mb-8 h-10"
+          className="text-2xl md:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-bold mb-8 h-12"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
         >
           <ReactTyped
             strings={[
@@ -77,42 +88,48 @@ export const Hero: React.FC = () => {
 
         {/* Description */}
         <motion.p
-          className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed font-light"
+          className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed font-light"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.4 }}
         >
           Transformo ideias em soluções robustas. Do planejamento ao deploy, com foco em 
-          <span className="text-white font-medium"> escalabilidade</span>, 
-          <span className="text-white font-medium"> IA </span> e 
-          <span className="text-white font-medium"> alta performance</span>.
+          <span className="text-white font-semibold"> escalabilidade</span>, 
+          <span className="text-white font-semibold"> IA </span> e 
+          <span className="text-white font-semibold"> alta performance</span>.
         </motion.p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-          <button className="w-full sm:w-auto px-10 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-xl shadow-indigo-600/20 transition-all hover:-translate-y-1">
+        <motion.div 
+          className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          <button className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-2xl shadow-xl shadow-indigo-600/20 transition-all hover:scale-105 active:scale-95">
             Contrate-me
           </button>
-          <button className="w-full sm:w-auto px-10 py-4 border border-slate-800 text-slate-300 font-bold rounded-2xl hover:bg-slate-800 transition-all hover:-translate-y-1">
+          <button className="w-full sm:w-auto px-10 py-4 bg-white/5 border border-white/10 backdrop-blur-md text-white font-bold rounded-2xl hover:bg-white/10 transition-all hover:scale-105 active:scale-95">
             Ver projetos
           </button>
-        </div>
+        </motion.div>
 
-        {/* TECH STACK ROBUSTA (Igual à imagem) */}
+        {/* TECH STACK ROBUSTA */}
         <motion.div
-          className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto"
+          className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 0.7 }}
         >
           {stackIcons.map((item, i) => (
             <motion.div
               key={item.name}
-              whileHover={{ y: -4, backgroundColor: '#1e293b' }}
-              className="flex items-center gap-3 px-4 py-2.5 bg-[#111827] border border-[#1f2937] rounded-xl shadow-2xl transition-all cursor-default group"
+              whileHover={{ y: -6, scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-3 px-5 py-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl transition-all cursor-default group hover:bg-white/10 hover:border-white/20"
             >
-              <item.icon size={22} className={`${item.color} group-hover:scale-110 transition-transform`} />
-              <span className="text-sm font-bold text-slate-200">{item.name}</span>
+              <item.icon size={24} className={`${item.color} group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all`} />
+              <span className="text-sm font-bold text-slate-200 tracking-wide">{item.name}</span>
             </motion.div>
           ))}
         </motion.div>
@@ -120,11 +137,11 @@ export const Hero: React.FC = () => {
 
       <motion.button
         onClick={scrollToNext}
-        className="mt-20 text-slate-600 hover:text-indigo-400 transition-colors"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
+        className="absolute bottom-10 z-20 text-slate-500 hover:text-indigo-400 transition-colors"
+        animate={{ y: [0, 12, 0] }}
+        transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
       >
-        <ChevronDown size={32} />
+        <ChevronDown size={36} />
       </motion.button>
     </section>
   )

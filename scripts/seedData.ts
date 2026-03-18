@@ -13,59 +13,43 @@ async function main() {
     // 1. Experiências
     const experiences = [
       {
-        cargo: "Pleno Fullstack Developer - Partner",
+        cargo: "Desenvolvedor FullStack Pleno - Societário",
         empresa: "BookSports",
-        periodo: "out de 2025 - o momento",
-        descricao: "Responsável pelo desenvolvimento fullstack e integrações entre plataformas SaaS, APIs e soluções com agentes de IA. Atuação direta em fluxos de automação, sistemas web e interfaces conversacionais inteligentes. Planejamento e gerenciamento em sociedade da plataforma, garantindo evolução e escalabilidade.",
-        tecnologias: ["Next.js", "Nest.js", "Node.js", "MongoDB", "AI Agents", "SaaS"],
+        periodo: "outubro de 2025 - Presente",
+        descricao: "Responsável pelo desenvolvimento full-stack e integrações em plataformas SaaS, APIs e soluções de agentes de IA. IA Conversacional — WhatsApp + SaaS: Desenvolvi um fluxo conversacional baseado em IA integrado diretamente ao SaaS da BookSports, automatizando a comunicação com o cliente e melhorando o suporte e a conversão em tempo real.",
+        tecnologias: ["TypeScript", "Next.js", "Nest.js", "Node.js", "MongoDB", "n8n", "ZaiaAI", "OpenAI"],
         fonte: "linkedin_import"
       },
       {
-        cargo: "Pleno FullStack Developer",
+        cargo: "Desenvolvedor FullStack Pleno",
         empresa: "HustApp",
-        periodo: "jun de 2025 - set de 2025",
-        descricao: "Otimização de latência de chat de 2 minutos para tempo real. Construção de pipeline serverless (AWS Lambda + Whisper) processando +15k audios/hora. Criação do 'Chat-Loader' para integrações financeiras e CRM.",
-        tecnologias: ["AWS Lambda", "Node.js", "React.js", "TypeScript", "Whisper AI", "Serverless"],
+        periodo: "novembro de 2024 - setembro de 2025",
+        descricao: "Responsável pelo desenvolvimento e otimização da plataforma de atendimento digital omnichannel impulsionada por IA, incluindo dashboards, integrações e automações. Chat-Loader: Criei uma camada BFF que reduziu o tempo de carregamento do chat de 2 minutos para milissegundos. Conversão e Transcrição de Áudio: Construí um pipeline capaz de processar mais de 15.000 ficheiros de áudio por hora.",
+        tecnologias: ["TypeScript", "Next.js", "Nest.js", "AWS Lambda", "FFmpeg", "Whisper", "Python", "MongoDB", "n8n", "Chatbot", "MetaAI", "OpenAI"],
         fonte: "linkedin_import"
       },
       {
-        cargo: "Junior Fullstack Developer",
-        empresa: "HustApp",
-        periodo: "nov de 2024 - jul de 2025",
-        descricao: "Desenvolvimento de soluções fullstack. No frontend, criação de interfaces dinâmicas para dashboards, métricas e gráficos interativos. No backend, design de APIs robustas integradas a sistemas financeiros e redes sociais. Implementação de chatbots e soluções de IA.",
-        tecnologias: ["Node.js", "React.js", "TypeScript", "JavaScript", "Chatbots", "CRM"],
+        cargo: "Instrutor/Professor - Tech-Inclusão",
+        empresa: "FAPTO, Palmas",
+        periodo: "setembro de 2024 - novembro de 2024",
+        descricao: "Instrutor selecionado para o Projeto TechInclusão (capacitação tecnológica para pessoas em vulnerabilidade social - 220 horas). Trilha prática para 60+ alunos criarem e publicarem portfólio em React.js.",
+        tecnologias: ["React.js", "Next.js", "Web Dev"],
         fonte: "linkedin_import"
       },
       {
-        cargo: "Instructor",
-        empresa: "Fapto / TechInclusão",
-        periodo: "set de 2024 - nov de 2024",
-        descricao: "Professor instrutor para alunos em situação de vulnerabilidade no projeto TechInclusão. Ensino de criação de sites, desde fundamentos até um projeto completo.",
-        tecnologias: ["HTML", "CSS", "Web Tech", "Teaching"],
+        cargo: "Engenheiro de Software Front-End",
+        empresa: "FAPTO, Palmas",
+        periodo: "janeiro de 2023 - setembro de 2024",
+        descricao: "Responsável pelo desenvolvimento frontend e entrega de sistemas web para o Governo do Tocantins, incluindo uma plataforma de previsão económica e política (TO-2045) e uma ferramenta de gestão documental.",
+        tecnologias: ["TypeScript", "React.js", "Node.js", "Java", "SpringBoot", "Figma"],
         fonte: "linkedin_import"
       },
       {
-        cargo: "Engenheiro de software front-end (Estágio)",
-        empresa: "Fapto / Governo do TO",
-        periodo: "jan de 2023 - set de 2024",
-        descricao: "Liderança de frontend para sistemas web de registro e gestão de documentos (TCC, artigos) e mapas de indicadores do Estado do Tocantins (TO-2045).",
-        tecnologias: ["Next.js", "React", "Node.js", "Figma", "Adobe Illustrator"],
-        fonte: "linkedin_import"
-      },
-      {
-        cargo: "Scientific Extension Researcher",
-        empresa: "Unitins",
-        periodo: "set de 2023 - out de 2024",
-        descricao: "Democratização da plataforma web de registro de programas de computadores para propriedade intelectual na Unitins para a comunidade externa.",
-        tecnologias: ["JavaScript", "TypeScript", "Web Dev"],
-        fonte: "linkedin_import"
-      },
-      {
-        cargo: "Technological Scientific Researcher",
-        empresa: "Unitins",
-        periodo: "ago de 2022 - set de 2023",
-        descricao: "Desenvolvimento de plataforma web de registro de programas de computadores para propriedade intelectual na Unitins para acadêmicos.",
-        tecnologias: ["Next.js", "Nest.js", "MongoDB"],
+        cargo: "Pesquisador e Extensionista Científico Tecnológico",
+        empresa: "Universidade Estadual do Tocantins",
+        periodo: "setembro de 2022 - outubro de 2024",
+        descricao: "Desenvolvimento full-stack do SoftwareHub, um sistema de gestão de propriedade intelectual para registo de software. Estabeleci a universidade como um polo de inovação no registo de programas de computador. Autor da propriedade intelectual do sistema SoftwareHUB. Premiado como Melhor Projeto Científico do Tocantins, 2024.",
+        tecnologias: ["TypeScript", "Next.js", "React.js", "Nest.js", "Node.js", "MongoDB"],
         fonte: "linkedin_import"
       }
     ]
@@ -77,27 +61,38 @@ async function main() {
     // 2. Certificações
     const certifications = [
       {
-        nome: "Data Analytics Professional Certificate",
+        nome: "Business Intelligence (BI) Professional",
         emissor: "Google",
         data: "2024",
-        link: "#"
-      },
-      {
-        nome: "Artificial Intelligence Certification",
-        emissor: "Huawei",
-        data: "2024",
+        horas: "40 horas",
         link: "#"
       },
       {
         nome: "Digital Marketing Certified",
         emissor: "Google",
         data: "2023",
+        horas: "40 horas",
         link: "#"
       },
       {
-        nome: "Web Accessibility (WCAG)",
-        emissor: "W3C / Self",
-        data: "2023",
+        nome: "Artificial Intelligence Certification",
+        emissor: "Huawei",
+        data: "2024",
+        horas: "40 horas",
+        link: "#"
+      },
+      {
+        nome: "HTML5 e CSS3 Parte 2 e 3",
+        emissor: "Alura",
+        data: "2021",
+        horas: "",
+        link: "#"
+      },
+      {
+        nome: "Acessibilidade Web e Algoritmos com JavaScript I",
+        emissor: "Alura",
+        data: "2021",
+        horas: "",
         link: "#"
       }
     ]
@@ -111,15 +106,15 @@ async function main() {
       {
         curso: "Sistemas de Informação",
         instituicao: "Universidade Estadual do Tocantins (Unitins)",
-        periodo: "2022 - 2026 (Previsão)",
-        descricao: "Foco em engenharia de software, arquitetura de sistemas e inteligência artificial.",
+        periodo: "Agosto de 2022 - Dezembro de 2026",
+        descricao: "Foco em engenharia de software, arquitetura de sistemas e inteligência artificial. Bacharelado.",
         fonte: "doc_import"
       },
       {
-        curso: "MTech in Information Technology",
-        instituicao: "Specialization",
-        periodo: "Cursando",
-        descricao: "Aprofundamento em tecnologias emergentes e gestão de TI.",
+        curso: "Master of Technology - MTech, Administração, Negócios e Marketing",
+        instituicao: "Developer Student Club CUSIT - Powered by Google Developers",
+        periodo: "Novembro de 2021 - Julho de 2022",
+        descricao: "Aprofundamento em tecnologias emergentes, negócios e marketing.",
         fonte: "doc_import"
       }
     ]
@@ -131,6 +126,7 @@ async function main() {
     console.log('🚀 Dados importados com sucesso!')
 
   } finally {
+
     await client.close()
   }
 }

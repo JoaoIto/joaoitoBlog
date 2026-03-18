@@ -28,31 +28,31 @@ const GithubCard: React.FC<GithubCardProps> = ({ repo, index }) => {
 
   return (
     <motion.div
-      className={`group flex flex-col bg-white dark:bg-slate-800 border ${
+      className={`group flex flex-col bg-[#0f172a] border ${
         repo.featured 
-          ? 'border-indigo-500 ring-1 ring-indigo-500/20 shadow-indigo-500/10' 
-          : 'border-slate-200 dark:border-slate-700'
-      } rounded-2xl p-5 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden`}
+          ? 'border-indigo-500 ring-1 ring-indigo-500/20 shadow-[0_0_15px_rgba(99,102,241,0.2)]' 
+          : 'border-slate-800'
+      } rounded-3xl p-6 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-2 transition-all duration-300 relative overflow-hidden`}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: index * 0.03 }}
     >
       {repo.featured && (
-        <div className="absolute top-0 right-0 px-3 py-1 bg-indigo-600 text-white text-[10px] font-bold uppercase tracking-widest rounded-bl-xl shadow-lg ring-1 ring-white/20">
+        <div className="absolute top-0 right-0 px-4 py-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-[10px] font-bold uppercase tracking-widest rounded-bl-2xl shadow-lg">
           Destaque
         </div>
       )}
 
       {/* Header */}
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400">
-          <Code2 size={18} className={repo.featured ? "animate-pulse" : ""} />
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex items-center gap-3 text-indigo-400">
+          <Code2 size={20} className={repo.featured ? "animate-pulse" : ""} />
           <a
             href={repo.html_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-bold text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-base truncate max-w-[200px]"
+            className="font-bold text-white hover:text-indigo-400 transition-colors text-lg truncate max-w-[200px]"
           >
             {repo.name}
           </a>
@@ -60,17 +60,17 @@ const GithubCard: React.FC<GithubCardProps> = ({ repo, index }) => {
       </div>
 
       {/* Description */}
-      <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3 flex-grow leading-relaxed">
+      <p className="text-sm text-slate-400 mb-5 line-clamp-3 flex-grow leading-relaxed font-light">
         {repo.description ?? 'Desenvolvimento de solução técnica robusta.'}
       </p>
 
       {/* Topics */}
-      {repo.topics && (
-        <div className="flex flex-wrap gap-1.5 mb-5">
+      {repo.topics && repo.topics.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-6">
           {(repo.featured ? repo.topics.slice(0, 5) : repo.topics.slice(0, 3)).map((topic) => (
             <span
               key={topic}
-              className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600 group-hover:border-indigo-300 dark:group-hover:border-indigo-700 transition-colors"
+              className="text-[10px] px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-slate-300 group-hover:border-indigo-500/50 transition-colors"
             >
               {topic}
             </span>
@@ -79,12 +79,12 @@ const GithubCard: React.FC<GithubCardProps> = ({ repo, index }) => {
       )}
 
       {/* Action Buttons */}
-      <div className="flex items-center gap-3 mb-5">
+      <div className="flex items-center gap-3 mb-6">
         <a
           href={repo.html_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-900 dark:text-white rounded-lg transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 py-2.5 text-xs font-semibold bg-white/5 hover:bg-white/10 text-white rounded-xl transition-colors border border-white/5 hover:border-white/10"
         >
           <Github size={14} />
           Repo
@@ -94,28 +94,28 @@ const GithubCard: React.FC<GithubCardProps> = ({ repo, index }) => {
             href={repo.homepage}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors shadow-sm"
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 text-xs font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl transition-all shadow-lg"
           >
             <Globe size={14} />
-            Demo
+            Live Demo
           </a>
         )}
       </div>
 
       {/* Footer Stats */}
-      <div className="flex items-center gap-4 text-[10px] font-medium text-slate-400 mt-auto pt-3 border-t border-slate-100 dark:border-slate-700/50">
+      <div className="flex items-center gap-4 text-[11px] font-medium text-slate-500 mt-auto pt-4 border-t border-slate-800/50">
         {repo.language && (
-          <span className="flex items-center gap-1.5 mr-auto">
+          <span className="flex items-center gap-2 mr-auto">
             <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: langColor }} />
             {repo.language}
           </span>
         )}
-        <span className="flex items-center gap-1 group-hover:text-amber-500 transition-colors">
-          <Star size={12} fill="currentColor" className="opacity-70" />
+        <span className="flex items-center gap-1.5 group-hover:text-amber-500 transition-colors">
+          <Star size={14} fill="currentColor" className="opacity-70" />
           {repo.stargazers_count}
         </span>
-        <span className="flex items-center gap-1 group-hover:text-indigo-400 transition-colors">
-          <GitFork size={12} />
+        <span className="flex items-center gap-1.5 group-hover:text-indigo-400 transition-colors">
+          <GitFork size={14} />
           {repo.forks_count}
         </span>
       </div>
@@ -130,7 +130,7 @@ interface PortfolioProps {
 
 export const GitHubPortfolioSection: React.FC<PortfolioProps> = ({ repos, loading }) => {
   return (
-    <section id="projects" className="py-24 bg-slate-50 dark:bg-slate-900/50">
+    <section id="projects" className="py-24 bg-[#010409]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           className="text-center mb-16"
@@ -139,19 +139,19 @@ export const GitHubPortfolioSection: React.FC<PortfolioProps> = ({ repos, loadin
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-indigo-600 dark:text-indigo-400 font-bold text-xs uppercase tracking-[0.2em] mb-3">Portfolio</p>
-          <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
+          <p className="text-indigo-500 font-bold text-xs uppercase tracking-[0.2em] mb-3">Portfolio</p>
+          <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
             Projetos em Foco
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
-            Uma seleção dos meus melhores trabalhos, sincronizados diretamente do GitHub e destacados conforme relevância.
+          <p className="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
+            Uma seleção dos meus melhores trabalhos técnicos, sincronizados diretamente do GitHub.
           </p>
         </motion.div>
 
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="h-64 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 animate-pulse shadow-sm" />
+              <div key={i} className="h-64 rounded-3xl bg-[#0f172a] border border-slate-800 animate-pulse shadow-sm" />
             ))}
           </div>
         ) : (
@@ -172,9 +172,9 @@ export const GitHubPortfolioSection: React.FC<PortfolioProps> = ({ repos, loadin
             href="https://github.com/JoaoIto"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 font-bold text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors uppercase text-xs tracking-widest"
+            className="inline-flex items-center gap-2 px-6 py-3 font-bold text-slate-300 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:text-white transition-all uppercase text-xs tracking-widest shadow-lg"
           >
-            <Github size={20} />
+            <Github size={18} />
             Explorar todo o ecossistema no GitHub
           </a>
         </motion.div>

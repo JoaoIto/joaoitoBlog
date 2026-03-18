@@ -11,7 +11,7 @@ interface ExperienciaProps {
 }
 
 export const ExperienciaSection: React.FC<ExperienciaProps> = ({ experiencias, experienciasLoading }) => (
-  <section id="experience" className="py-20 bg-white dark:bg-slate-950">
+  <section id="experience" className="py-20 bg-[#020617] border-t border-slate-800/50">
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Section header */}
       <motion.div
@@ -21,8 +21,8 @@ export const ExperienciaSection: React.FC<ExperienciaProps> = ({ experiencias, e
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        <p className="text-indigo-600 dark:text-indigo-400 font-semibold text-sm uppercase tracking-wider mb-2">Trajetória</p>
-        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
+        <p className="text-indigo-500 font-semibold text-sm uppercase tracking-wider mb-2">Trajetória</p>
+        <h2 className="text-3xl md:text-4xl font-bold text-white">
           Experiência Profissional
         </h2>
       </motion.div>
@@ -31,7 +31,7 @@ export const ExperienciaSection: React.FC<ExperienciaProps> = ({ experiencias, e
       {experienciasLoading ? (
         <div className="space-y-6">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="h-32 rounded-2xl bg-slate-100 dark:bg-slate-800 animate-pulse" />
+            <div key={i} className="h-32 rounded-3xl bg-[#0f172a] animate-pulse border border-slate-800" />
           ))}
         </div>
       ) : experiencias.length === 0 ? (
@@ -39,7 +39,7 @@ export const ExperienciaSection: React.FC<ExperienciaProps> = ({ experiencias, e
       ) : (
         <div className="relative">
           {/* vertical line */}
-          <div className="absolute left-6 top-0 bottom-0 w-px bg-slate-200 dark:bg-slate-800 hidden sm:block" />
+          <div className="absolute left-6 top-0 bottom-0 w-px bg-slate-800 hidden sm:block" />
 
           <div className="space-y-8">
             {experiencias.map((exp, index) => (
@@ -57,23 +57,23 @@ export const ExperienciaSection: React.FC<ExperienciaProps> = ({ experiencias, e
                 </div>
 
                 {/* Card */}
-                <div className="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 hover:shadow-md transition-shadow duration-300">
+                <div className="flex-1 bg-[#0f172a] border border-slate-800 rounded-3xl p-8 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 group">
                   <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
                     <div>
-                      <h3 className="text-lg font-bold text-slate-900 dark:text-white">{exp.cargo}</h3>
-                      <p className="text-indigo-600 dark:text-indigo-400 font-medium text-sm">{exp.empresa}</p>
+                      <h3 className="text-xl font-bold text-white mb-1 group-hover:text-indigo-400 transition-colors">{exp.cargo}</h3>
+                      <p className="text-indigo-400 font-medium text-sm">{exp.empresa}</p>
                     </div>
-                    <span className="text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full whitespace-nowrap">
+                    <span className="text-xs font-semibold text-slate-300 bg-slate-900/80 border border-slate-800 px-3 py-1.5 rounded-full whitespace-nowrap">
                       {exp.periodo}
                     </span>
                   </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">{exp.descricao}</p>
+                  <p className="text-sm text-slate-400 mb-6 leading-relaxed font-light">{exp.descricao}</p>
                   {exp.tecnologias && exp.tecnologias.length > 0 && (
                     <div className="flex flex-wrap gap-1.5">
                       {exp.tecnologias.map((tech) => (
                         <span
                           key={tech}
-                          className="text-xs px-2 py-0.5 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-md"
+                          className="text-[11px] font-semibold tracking-wide px-3 py-1.5 bg-slate-900/80 text-slate-300 border border-slate-800 rounded-xl group-hover:border-indigo-500/20 transition-colors"
                         >
                           {tech}
                         </span>

@@ -43,7 +43,7 @@ const skillCategories = [
 
 export const SkillsSection = () => {
   return (
-    <section id="skills" className="py-24 bg-slate-50 dark:bg-slate-900/50">
+    <section id="skills" className="py-24 bg-[#020617] border-t border-slate-800/50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           className="text-center mb-16"
@@ -52,11 +52,11 @@ export const SkillsSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-indigo-600 dark:text-indigo-400 font-bold text-xs uppercase tracking-[0.2em] mb-3">Expertise</p>
-          <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
+          <p className="text-indigo-500 font-bold text-xs uppercase tracking-[0.2em] mb-3">Expertise</p>
+          <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
             Habilidades Técnicas
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
+          <p className="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
             Um ecossistema de tecnologias que utilizo para criar produtos digitais escaláveis e inteligentes.
           </p>
         </motion.div>
@@ -65,23 +65,23 @@ export const SkillsSection = () => {
           {skillCategories.map((category, idx) => (
             <motion.div
               key={category.title}
-              className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500/50 hover:shadow-xl transition-all duration-300"
+              className="bg-[#0f172a] p-8 rounded-3xl border border-slate-800 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 group"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: idx * 0.1 }}
             >
-              <div className="w-14 h-14 bg-slate-50 dark:bg-slate-900 rounded-2xl flex items-center justify-center mb-6 shadow-sm">
+              <div className="w-14 h-14 bg-slate-900 border border-slate-800 rounded-2xl flex items-center justify-center mb-6 shadow-inner group-hover:bg-indigo-500/10 group-hover:border-indigo-500/30 transition-colors">
                 {category.icon}
               </div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
+              <h3 className="text-xl font-bold text-white mb-5">
                 {category.title}
               </h3>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2.5">
                 {category.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="px-3 py-1 bg-slate-100 dark:bg-slate-700/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-semibold border border-slate-200 dark:border-slate-600"
+                    className="px-3 py-1.5 bg-slate-900/80 text-slate-300 rounded-xl text-[11px] font-semibold tracking-wide border border-slate-800 group-hover:border-indigo-500/20 transition-colors"
                   >
                     {skill}
                   </span>
