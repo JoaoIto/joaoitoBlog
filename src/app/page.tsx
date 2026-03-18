@@ -1,145 +1,148 @@
 'use client'
 
-import { useState, useEffect } from "react"
-import { motion, useAnimation } from "framer-motion"
-import { Github, Linkedin, Mail} from 'lucide-react'
-import { useArticles } from "./hooks/articles/useArticles"
-import { useProjects } from "./hooks/projects/useProjects"
-import React from "react"
-import { useExperiencias } from "./hooks/experiences/useExperiences"
-import { useEducacao } from "./hooks/education/useEducation"
-import {ExperienciaSection} from "@/components/ui/organisms/ExperienciaSection";
-import {EducacaoSection} from "@/components/ui/organisms/EducacaoSection";
-import {PortfolioSection} from "@/components/ui/organisms/PortfolioSection";
-import {ArticlesSection} from "@/components/ui/organisms/ArticlesSection";
-import {SkillsSection} from "@/components/ui/molecules/SkillsSection";
-import {ContactSection} from "@/components/ui/organisms/ContactSection";
-import {Header} from "@/components/ui/molecules/Header";
+import React, { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { 
+  Github, Linkedin, Mail, Quote, Database, Cloud, 
+  Code2, Server, Terminal, Cpu, Award, Globe, Zap,
+  Layers, Hexagon, Boxes, Workflow, ShieldCheck
+} from 'lucide-react'
+
+// Hooks e Componentes
+import { useExperiencias } from './hooks/experiences/useExperiences'
+import { useEducacao } from './hooks/education/useEducation'
+import { useGithubRepos } from './hooks/github/useGithubRepos'
+import { useCertifications } from './hooks/certifications/useCertifications'
+
+import { Navbar } from '@/components/ui/molecules/Navbar'
+import { Hero } from '@/components/ui/organisms/Hero'
+import { ExperienciaSection } from '@/components/ui/organisms/ExperienciaSection'
+import { EducacaoSection } from '@/components/ui/organisms/EducacaoSection'
+import { GitHubPortfolioSection } from '@/components/ui/organisms/PortfolioSection'
+import { CertificationsSection } from '@/components/ui/organisms/CertificationsSection'
+import { SkillsSection } from '@/components/ui/molecules/SkillsSection'
+import { ContactSection } from '@/components/ui/organisms/ContactSection'
+
+import { IGithubRepo } from '@/app/api/github/route'
+
+// Componente de Tag Robusta
+const TechCard = ({ icon: Icon, children, color }: { icon: any, children: string, color: string }) => (
+  <motion.div 
+    whileHover={{ y: -2 }}
+    className="flex items-center gap-2.5 px-4 py-2 bg-[#0f172a] border border-slate-800 rounded-xl shadow-lg hover:border-indigo-500/50 transition-all group"
+  >
+    <Icon size={18} className={`${color} group-hover:scale-110 transition-transform`} />
+    <span className="text-sm font-semibold text-slate-300 whitespace-nowrap">{children}</span>
+  </motion.div>
+)
+
 export default function Portfolio() {
-  const { articles, loading: articlesLoading } = useArticles()
-  const { projects, loading: projectsLoading } = useProjects()
   const { experiencias, loading: experienciasLoading } = useExperiencias()
   const { educacao, loading: educacaoLoading } = useEducacao()
-  const controls = useAnimation()
-  const [currentProjectIndex, setCurrentProjectIndex] = useState(0)
-  const [currentArticleIndex, setCurrentArticleIndex] = useState(0)
+  const { repos, loading: reposLoading } = useGithubRepos()
+  const { certifications, loading: certificationsLoading } = useCertifications()
+  
+  const [pinnedRepos, setPinnedRepos] = useState<IGithubRepo[]>([])
+  const [isPinnedLoading, setIsPinnedLoading] = useState(true)
 
-  useEffect(() => {
-    controls.start((i) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.1 },
-    }))
-  }, [controls])
-
-  const nextProject = () => {
-    setCurrentProjectIndex((prevIndex) =>
-        prevIndex === projects.length - 1 ? 0 : prevIndex + 1
-    )
-  }
-
-  const prevProject = () => {
-    setCurrentProjectIndex((prevIndex) =>
-        prevIndex === 0 ? projects.length - 1 : prevIndex - 1
-    )
-  }
-
-  const nextArticle = () => {
-    setCurrentArticleIndex((prevIndex) =>
-        prevIndex === articles.length - 1 ? 0 : prevIndex + 1
-    )
-  }
-
-  const prevArticle = () => {
-    setCurrentArticleIndex((prevIndex) =>
-        prevIndex === 0 ? articles.length - 1 : prevIndex - 1
-    )
-  }
+useEffect(() => {
+  fetch('/api/github/pinned')
+    .then(res => res.json())
+    .then(data => {
+      // Garantimos que pegamos apenas o array vindo da API
+      if (Array.isArray(data)) {
+        setPinnedRepos(data)
+      }
+      setIsPinnedLoading(false)
+    })
+    .catch(err => {
+      console.error("Erro ao carregar pinned repos", err)
+      setIsPinnedLoading(false)
+    })
+}, [])
 
   return (
-      <div className="min-h-screen bg-gradient-to-r from-[#01103D] to-[#4501FF] text-gray-900 dark:text-[#8892b0] transition-colors duration-300">
-        <Header />
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <motion.section
-              className="mb-20"
-              initial={{opacity: 0, y: 50}}
-              animate={controls}
-              custom={0}
+    <div className="min-h-screen bg-[#020617] text-slate-100 selection:bg-indigo-500/30 transition-colors duration-500">
+      <Navbar />
+      
+      <Hero />
+
+      {/* RESUMO ESTRATÉGICO */}
+      <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="p-8 md:p-12 rounded-[2.5rem] bg-slate-900/40 border border-slate-800/50 backdrop-blur-xl relative"
           >
-            <div className="grid grid-cols-1 gap-8">
-              <ExperienciaSection  experiencias={experiencias} experienciasLoading={experienciasLoading} />
+            <Quote className="absolute top-8 left-8 text-indigo-500/10 w-16 h-16" />
+            <div className="relative z-10 space-y-6">
+              <h2 className="text-2xl md:text-4xl font-black tracking-tight text-center">
+                Engenharia de Software <span className="text-indigo-500 italic font-medium">Full Cycle</span>
+              </h2>
+              <p className="text-lg text-slate-400 leading-relaxed text-center font-light italic">
+                "Transformo ideias em soluções digitais robustas, especializado em arquiteturas escaláveis, 
+                otimização de sistemas e IA."
+              </p>
             </div>
-            <div className="mt-8">
-              <EducacaoSection educacao={educacao} educacaoLoading={educacaoLoading}/>
-            </div>
-          </motion.section>
+          </motion.div>
+        </div>
+      </section>
 
-          <motion.section
-              className="mb-20"
-              initial={{ opacity: 0, y: 50 }}
-              animate={controls}
-              custom={1}
-          >
-            <PortfolioSection projects={projects} projectsLoading={projectsLoading} currentProjectIndex={currentProjectIndex} prevProject={prevProject} nextProject={nextProject}/>
-          </motion.section>
+      {/* ÁREAS DE EXPERTISE */}
+      <section className="py-12 px-4 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <motion.div whileHover={{ y: -5 }} className="p-8 rounded-3xl bg-slate-900/30 border border-slate-800/50 hover:border-indigo-500/30 transition-all">
+            <Server className="text-indigo-500 mb-4" size={32} />
+            <h3 className="font-bold text-xl mb-3">Backend & Infra</h3>
+            <p className="text-sm text-slate-500 leading-relaxed">Arquiteturas robustas com NestJS, Redis e pipelines AWS para processamento distribuído.</p>
+          </motion.div>
+          <motion.div whileHover={{ y: -5 }} className="p-8 rounded-3xl bg-slate-900/30 border border-slate-800/50 hover:border-blue-500/30 transition-all">
+            <Globe className="text-blue-500 mb-4" size={32} />
+            <h3 className="font-bold text-xl mb-3">Frontend & UX</h3>
+            <p className="text-sm text-slate-500 leading-relaxed">Interfaces modernas com Next.js 14, focadas em performance, core web vitals e experiência fluida.</p>
+          </motion.div>
+          <motion.div whileHover={{ y: -5 }} className="p-8 rounded-3xl bg-slate-900/30 border border-slate-800/50 hover:border-emerald-500/30 transition-all">
+            <Zap className="text-emerald-500 mb-4" size={32} />
+            <h3 className="font-bold text-xl mb-3">IA & Automação</h3>
+            <p className="text-sm text-slate-500 leading-relaxed">Agentes de IA conversacionais e automações n8n que otimizam o ciclo de vida do produto.</p>
+          </motion.div>
+        </div>
+      </section>
 
-          <motion.section
-              className="mb-20"
-              initial={{ opacity: 0, y: 50 }}
-              animate={controls}
-              custom={2}
-          >
-            <ArticlesSection  articles={articles} articlesLoading={articlesLoading} currentArticleIndex={currentArticleIndex} prevArticle={prevArticle} nextArticle={nextArticle} />
-          </motion.section>
+      {/* CONTEÚDO DINÂMICO */}
+      <div className="space-y-0 relative">
+        <ExperienciaSection experiencias={experiencias} experienciasLoading={experienciasLoading} />
+        
+        {/* GitHub Portfolio */}
+        <GitHubPortfolioSection 
+          repos={pinnedRepos} 
+          loading={isPinnedLoading} 
+        />
 
-          <motion.section
-              className="mb-20"
-              initial={{ opacity: 0, y: 50 }}
-              animate={controls}
-              custom={3}
-          >
-            <SkillsSection/>
-          </motion.section>
+        
+        <EducacaoSection educacao={educacao} educacaoLoading={educacaoLoading} />
 
-          <motion.section
-              className="mb-20"
-              initial={{ opacity: 0, y: 50 }}
-              animate={controls}
-              custom={4}
-          >
-            <ContactSection />
-          </motion.section>
-        </main>
+        <CertificationsSection certifications={certifications} loading={certificationsLoading} />
 
-        <footer className="bg-white/10 dark:bg-[#0a192f]/10 backdrop-blur-sm py-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-600 dark:text-[#8892b0] mb-4 md:mb-0">&copy; 2024 João Ito. Todos os direitos reservados.</p>
-            <div className="flex space-x-6">
-              <a
-                  href="https://github.com/JoaoIto"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-600 dark:text-[#8892b0] hover:text-gray-900 dark:hover:text-[#64ffda] transition-colors duration-300"
-              >
-                <Github />
-              </a>
-              <a
-                  href="https://www.linkedin.com/in/jo%C3%A3o-victor-p%C3%B3voa-fran%C3%A7a-97502420b/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-600 dark:text-[#8892b0] hover:text-gray-900 dark:hover:text-[#64ffda] transition-colors duration-300"
-              >
-                <Linkedin />
-              </a>
-              <a
-                  href="mailto:joaovictorpfr@gmail.com"
-                  className="text-gray-600 dark:text-[#8892b0] hover:text-gray-900 dark:hover:text-[#64ffda] transition-colors duration-300"
-              >
-                <Mail />
-              </a>
-            </div>
-          </div>
-        </footer>
+        <SkillsSection />
+        <ContactSection />
       </div>
+
+      <footer className="bg-[#010409] border-t border-slate-800/50 py-16 px-6">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="text-center md:text-left">
+            <span className="text-3xl font-black tracking-tighter text-white uppercase">JOÃO <span className="text-indigo-500">ITO</span></span>
+            <p className="text-sm text-slate-500 mt-2 font-mono tracking-widest">FULLSTACK DEVELOPER • 2024</p>
+          </div>
+          
+          <div className="flex gap-5">
+            <motion.a whileHover={{ scale: 1.1 }} href="https://github.com/JoaoIto" target="_blank" className="p-4 rounded-xl bg-[#0f172a] border border-slate-800 text-slate-400 hover:text-white transition-all"><Github size={24}/></motion.a>
+            <motion.a whileHover={{ scale: 1.1 }} href="https://linkedin.com" target="_blank" className="p-4 rounded-xl bg-[#0f172a] border border-slate-800 text-slate-400 hover:text-white transition-all"><Linkedin size={24}/></motion.a>
+            <motion.a whileHover={{ scale: 1.1 }} href="mailto:joaovictorpfr@gmail.com" className="p-4 rounded-xl bg-[#0f172a] border border-slate-800 text-slate-400 hover:text-white transition-all"><Mail size={24}/></motion.a>
+          </div>
+        </div>
+      </footer>
+    </div>
   )
 }
