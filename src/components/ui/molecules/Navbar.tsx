@@ -72,7 +72,7 @@ export const Navbar: React.FC = () => {
                     : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
                 }`}
               >
-                {item.label}
+                {item.name}
               </button>
             ))}
           </div>

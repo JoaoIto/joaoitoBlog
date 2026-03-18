@@ -23,6 +23,8 @@ import { CertificationsSection } from '@/components/ui/organisms/CertificationsS
 import { SkillsSection } from '@/components/ui/molecules/SkillsSection'
 import { ContactSection } from '@/components/ui/organisms/ContactSection'
 
+import { IGithubRepo } from '@/app/api/github/route'
+
 // Componente de Tag Robusta
 const TechCard = ({ icon: Icon, children, color }: { icon: any, children: string, color: string }) => (
   <motion.div 
@@ -40,8 +42,8 @@ export default function Portfolio() {
   const { repos, loading: reposLoading } = useGithubRepos()
   const { certifications, loading: certificationsLoading } = useCertifications()
   
-  const [pinnedRepos, setPinnedRepos] = useState([])
-const [isPinnedLoading, setIsPinnedLoading] = useState(true)
+  const [pinnedRepos, setPinnedRepos] = useState<IGithubRepo[]>([])
+  const [isPinnedLoading, setIsPinnedLoading] = useState(true)
 
 useEffect(() => {
   fetch('/api/github/pinned')

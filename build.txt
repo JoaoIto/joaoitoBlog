@@ -1,0 +1,24 @@
+
+> project@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.35
+  - Environments: .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Skipping linting
+   Checking validity of types ...
+Failed to compile.
+
+./src/components/ui/molecules/Navbar.tsx:75:23
+Type error: Property 'label' does not exist on type '{ name: string; href: string; }'.
+
+[0m [90m 73 |[39m [32m                }`[39m}[0m
+[0m [90m 74 |[39m               [33m>[39m[0m
+[0m[31m[1m>[22m[39m[90m 75 |[39m                 {item[33m.[39mlabel}[0m
+[0m [90m    |[39m                       [31m[1m^[22m[39m[0m
+[0m [90m 76 |[39m               [33m<[39m[33m/[39m[33mbutton[39m[33m>[39m[0m
+[0m [90m 77 |[39m             ))}[0m
+[0m [90m 78 |[39m           [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m[0m
+Next.js build worker exited with code: 1 and signal: null
