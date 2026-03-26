@@ -52,7 +52,7 @@ export const SkillsSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-indigo-500 font-bold text-xs uppercase tracking-[0.2em] mb-3">Expertise</p>
+          <p className="text-indigo-500 font-bold text-xs uppercase tracking-[0.2em] mb-3">Habilidades</p>
           <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
             Habilidades Técnicas
           </h2>

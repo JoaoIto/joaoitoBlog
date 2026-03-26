@@ -77,8 +77,7 @@ export const Hero: React.FC = () => {
             strings={[
               'Desenvolvedor Full Stack',
               'Inteligência Artificial e Agentes',
-              'Cloud & Platform Engineer',
-              'Expert em Node.js & NestJS',
+              'Cloud & Infra',
             ]}
             typeSpeed={60}
             backSpeed={40}
