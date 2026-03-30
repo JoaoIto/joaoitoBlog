@@ -13,7 +13,11 @@ export const useCertifications = () => {
       try {
         const response = await fetch("/api/certifications")
         const data = await response.json()
-        setCertifications(data)
+        if (Array.isArray(data)) {
+          setCertifications(data)
+        } else {
+          setCertifications([])
+        }
       } catch (error) {
         console.error("Failed to fetch certifications:", error)
         setCertifications([])

@@ -25,6 +25,17 @@ import { ContactSection } from '@/components/ui/organisms/ContactSection'
 
 import { IGithubRepo } from '@/app/api/github/route'
 
+const SectionReveal = ({ children }: { children: React.ReactNode }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0.95, y: 50, filter: "blur(5px)" }}
+    whileInView={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+    viewport={{ once: true, margin: "-15%" }}
+    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+  >
+    {children}
+  </motion.div>
+)
+
 // Componente de Tag Robusta
 const TechCard = ({ icon: Icon, children, color }: { icon: any, children: string, color: string }) => (
   <motion.div 
@@ -112,21 +123,33 @@ useEffect(() => {
 
       {/* CONTEÚDO DINÂMICO */}
       <div className="space-y-0 relative">
-        <ExperienciaSection experiencias={experiencias} experienciasLoading={experienciasLoading} />
+        <SectionReveal>
+          <ExperienciaSection experiencias={experiencias} experienciasLoading={experienciasLoading} />
+        </SectionReveal>
         
         {/* GitHub Portfolio */}
-        <GitHubPortfolioSection 
-          repos={pinnedRepos} 
-          loading={isPinnedLoading} 
-        />
-
+        <SectionReveal>
+          <GitHubPortfolioSection 
+            repos={pinnedRepos} 
+            loading={isPinnedLoading} 
+          />
+        </SectionReveal>
         
-        <EducacaoSection educacao={educacao} educacaoLoading={educacaoLoading} />
+        <SectionReveal>
+          <EducacaoSection educacao={educacao} educacaoLoading={educacaoLoading} />
+        </SectionReveal>
 
-        <CertificationsSection certifications={certifications} loading={certificationsLoading} />
+        <SectionReveal>
+          <CertificationsSection certifications={certifications} loading={certificationsLoading} />
+        </SectionReveal>
 
-        <SkillsSection />
-        <ContactSection />
+        <SectionReveal>
+          <SkillsSection />
+        </SectionReveal>
+
+        <SectionReveal>
+          <ContactSection />
+        </SectionReveal>
       </div>
 
       <footer className="bg-[#010409] border-t border-slate-800/50 py-16 px-6">

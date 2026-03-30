@@ -13,7 +13,11 @@ export function useEducacao() {
           throw new Error('Falha ao buscar educação');
         }
         const data = await response.json();
-        setEducacao(data);
+        if (Array.isArray(data)) {
+          setEducacao(data);
+        } else {
+          setEducacao([]);
+        }
       } catch (error) {
         console.error('Erro ao buscar educação:', error);
       } finally {

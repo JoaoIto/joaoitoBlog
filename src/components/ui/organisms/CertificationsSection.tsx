@@ -64,7 +64,7 @@ export const CertificationsSection: React.FC<CertificationsSectionProps> = ({ ce
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {certifications.map((cert, idx) => (
+            {Array.isArray(certifications) && certifications.map((cert, idx) => (
               <motion.div
                 key={cert._id || idx}
                 className="group relative bg-[#0f172a] p-8 rounded-3xl border border-slate-800 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 overflow-hidden"

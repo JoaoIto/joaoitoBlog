@@ -13,7 +13,11 @@ export function useExperiencias() {
           throw new Error('Falha ao buscar experiências');
         }
         const data = await response.json();
-        setExperiencias(data);
+        if (Array.isArray(data)) {
+          setExperiencias(data);
+        } else {
+          setExperiencias([]);
+        }
       } catch (error) {
         console.error('Erro ao buscar experiências:', error);
       } finally {

@@ -39,20 +39,31 @@ const GithubCard: React.FC<GithubCardProps> = ({ repo, index }) => {
       transition={{ duration: 0.4, delay: index * 0.03 }}
     >
       {repo.featured && (
-        <div className="absolute top-0 right-0 px-4 py-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-[10px] font-bold uppercase tracking-widest rounded-bl-2xl shadow-lg">
+        <div className="absolute top-0 right-0 px-4 py-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-[10px] font-bold uppercase tracking-widest rounded-bl-2xl shadow-lg z-20">
           Destaque
         </div>
       )}
 
+      {repo.imageUrl && (
+        <div className="absolute top-0 left-0 w-full h-40 z-0 overflow-hidden">
+          <img 
+            src={repo.imageUrl} 
+            alt={repo.name} 
+            className="w-full h-full object-cover opacity-50 group-hover:scale-105 group-hover:opacity-70 transition-all duration-500"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/80 to-transparent" />
+        </div>
+      )}
+
       {/* Header */}
-      <div className="flex items-start justify-between mb-4">
+      <div className="relative z-10 flex items-start justify-between mb-4 mt-8">
         <div className="flex items-center gap-3 text-indigo-400">
           <Code2 size={20} className={repo.featured ? "animate-pulse" : ""} />
           <a
             href={repo.html_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-bold text-white hover:text-indigo-400 transition-colors text-lg truncate max-w-[200px]"
+            className="font-bold text-white hover:text-indigo-400 transition-colors text-xl truncate max-w-[200px] drop-shadow-md"
           >
             {repo.name}
           </a>
@@ -60,17 +71,17 @@ const GithubCard: React.FC<GithubCardProps> = ({ repo, index }) => {
       </div>
 
       {/* Description */}
-      <p className="text-sm text-slate-400 mb-5 line-clamp-3 flex-grow leading-relaxed font-light">
+      <p className="relative z-10 text-sm text-slate-300 mb-5 line-clamp-3 flex-grow leading-relaxed font-light">
         {repo.description ?? 'Desenvolvimento de solução técnica robusta.'}
       </p>
 
       {/* Topics */}
       {repo.topics && repo.topics.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="relative z-10 flex flex-wrap gap-2 mb-6">
           {(repo.featured ? repo.topics.slice(0, 5) : repo.topics.slice(0, 3)).map((topic) => (
             <span
               key={topic}
-              className="text-[10px] px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-slate-300 group-hover:border-indigo-500/50 transition-colors"
+              className="text-[10px] px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-slate-300 group-hover:border-indigo-500/50 transition-colors shadow-sm"
             >
               {topic}
             </span>
@@ -79,7 +90,7 @@ const GithubCard: React.FC<GithubCardProps> = ({ repo, index }) => {
       )}
 
       {/* Action Buttons */}
-      <div className="flex items-center gap-3 mb-6">
+      <div className="relative z-10 flex items-center gap-3 mb-6">
         <a
           href={repo.html_url}
           target="_blank"
@@ -103,7 +114,7 @@ const GithubCard: React.FC<GithubCardProps> = ({ repo, index }) => {
       </div>
 
       {/* Footer Stats */}
-      <div className="flex items-center gap-4 text-[11px] font-medium text-slate-500 mt-auto pt-4 border-t border-slate-800/50">
+      <div className="relative z-10 flex items-center gap-4 text-[11px] font-medium text-slate-500 mt-auto pt-4 border-t border-slate-800/50">
         {repo.language && (
           <span className="flex items-center gap-2 mr-auto">
             <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: langColor }} />

@@ -19,6 +19,7 @@ export interface IGithubRepo {
   created_at: string;
   fork: boolean;
   visibility: string;
+  imageUrl?: string;
 }
 
 export async function GET() {

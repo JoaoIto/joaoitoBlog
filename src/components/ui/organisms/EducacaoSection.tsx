@@ -34,7 +34,7 @@ export const EducacaoSection: React.FC<EducacaoProps> = ({ educacao, educacaoLoa
         <p className="text-center text-slate-500 dark:text-slate-400">Nenhuma formação cadastrada.</p>
       ) : (
         <div className="space-y-4">
-          {educacao.map((edu, index) => (
+          {Array.isArray(educacao) && educacao.map((edu, index) => (
             <motion.div
               key={edu._id.toString()}
               className="flex gap-6 bg-[#0f172a] border border-slate-800 rounded-3xl p-8 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 group"
